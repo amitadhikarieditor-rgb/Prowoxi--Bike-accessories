@@ -5,7 +5,12 @@ let refreshing=false,queue=[];function flush(error){queue.forEach(({resolve,reje
 
 api.interceptors.response.use(r=>r,async error=>{
     const cfg=error.config;
-    if(error.response?.status===401&&!cfg._retry&&!cfg.url?.includes('/auth/')){
+    if(![
+    '/auth/login',
+    '/auth/register',
+    '/auth/refresh',
+    '/auth/logout'
+].includes(cfg.url)){
         cfg._retry=true;if(!refreshing){
             refreshing=true;
             try{

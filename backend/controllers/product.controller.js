@@ -31,10 +31,29 @@ export async function getOne(req,res){
     const p=await Product.findOne({_id:req.params.id,isActive:true}).populate('category');
     if(!p)throw new AppError('Product not found',404,'PRODUCT_NOT_FOUND');res.json({success:true,data:p});}
 
-export async function adminCreate(req,res){
-    const p=await Product.create(req.body);
+export async function adminCreate(req, res) {
+
+    const imageUrls = req.files?.map(file => file.path) || [];
+
+    const p = await Product.create({
+        ...req.body,
+        price: Number(req.body.price),
+        stock: Number(req.body.stock),
+        compareAtPrice: req.body.compareAtPrice
+            ? Number(req.body.compareAtPrice)
+            : undefined,
+        images: imageUrls,
+        featured: req.body.featured === 'true'
+    });
+
     await cache.del('products:*');
-    res.status(201).json({success:true,message:'Product created',data:p});}
+
+    res.status(201).json({
+        success: true,
+        message: 'Product created',
+        data: p
+    });
+}
 
 export async function adminUpdate(req,res){
     const p=await Product.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true});

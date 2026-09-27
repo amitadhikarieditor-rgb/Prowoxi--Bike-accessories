@@ -18,9 +18,9 @@ export default function Header(){
             </Link>{user?<><Link to="/orders">Orders</Link>{user.role==='admin'&&<Link to="/admin">
             <LayoutDashboard size={18}/></Link>}
 
-            <Link to="/profile">
-            <h2>{user?.name?.charAt(0).toUpperCase()}</h2>
-    </Link>
+            <Link to="/profile" className="profile-avatar" size={18}>
+    <h1>{user?.name?.charAt(0).toUpperCase()}</h1>
+</Link>
 
             <button className="icon-btn" onClick={async()=>{
                 await logout();nav('/')}}>

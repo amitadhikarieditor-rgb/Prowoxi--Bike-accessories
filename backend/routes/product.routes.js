@@ -4,6 +4,7 @@ import {asyncHandler} from '../utils/asyncHandler.js';
 import {requireAuth,requireRole} from '../middleware/auth.js';
 import {validate} from '../middleware/validate.js';
 import {productSchema} from '../validators/product.js';
+import upload from '../config/upload.js';
 
 const r=Router();
 
@@ -13,7 +14,7 @@ r.get('/categories',asyncHandler(c.categories));
 
 r.get('/:id',asyncHandler(c.getOne));
 
-r.post('/',requireAuth,requireRole('admin'),validate(productSchema),asyncHandler(c.adminCreate));
+r.post('/',requireAuth,requireRole('admin'),validate(productSchema),upload.array('images', 5),asyncHandler(c.adminCreate));
 
 r.patch('/:id',requireAuth,requireRole('admin'),asyncHandler(c.adminUpdate));
 

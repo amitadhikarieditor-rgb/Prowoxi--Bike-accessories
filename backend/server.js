@@ -60,3 +60,4 @@ app.use('/api/webhooks',express.raw({type:'application/json'}),(req,res,next)=>{
     await connectDB();
 
 app.listen(env.port,()=>console.log(`Provoxi API running on http://localhost:${env.port}`));
+
