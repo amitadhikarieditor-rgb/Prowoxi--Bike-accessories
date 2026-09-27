@@ -1,0 +1,10 @@
+import api from './client';
+export const auth={register:d=>api.post('/auth/register',d),login:d=>api.post('/auth/login',d),logout:()=>api.post('/auth/logout'),me:()=>api.get('/auth/me'),forgot:d=>api.post('/auth/forgot-password',d),reset:d=>api.post('/auth/reset-password',d)};
+export const products={list:p=>api.get('/products',{params:p}),get:id=>api.get(`/products/${id}`),categories:()=>api.get('/products/categories')};
+export const cart={get:()=>api.get('/cart'),add:d=>api.post('/cart/items',d),update:(id,d)=>api.patch(`/cart/items/${id}`,d),remove:id=>api.delete(`/cart/items/${id}`)};
+export const wishlist={get:()=>api.get('/wishlist'),toggle:id=>api.post(`/wishlist/${id}/toggle`)};
+export const reviews={list:id=>api.get(`/reviews/product/${id}`),create:(id,d)=>api.post(`/reviews/product/${id}`,d),remove:id=>api.delete(`/reviews/${id}`)};
+export const addresses={list:()=>api.get('/addresses'),create:d=>api.post('/addresses',d),remove:id=>api.delete(`/addresses/${id}`)};
+export const orders={list:()=>api.get('/orders'),get:id=>api.get(`/orders/${id}`),create:d=>api.post('/orders',d),verify:d=>api.post('/orders/payment/verify',d)};
+export const notifications={list:()=>api.get('/notifications'),read:id=>api.patch(`/notifications/${id}/read`)};
+export const admin={dashboard:()=>api.get('/admin/dashboard'),users:()=>api.get('/admin/users'),setUserStatus:(id,d)=>api.patch(`/admin/users/${id}/status`,d),reviews:()=>api.get('/admin/reviews'),moderateReview:(id,d)=>api.patch(`/admin/reviews/${id}`,d),coupons:()=>api.get('/admin/coupons'),createCoupon:d=>api.post('/admin/coupons',d),createProduct:d=>api.post('/products',d),updateProduct:(id,d)=>api.patch(`/products/${id}`,d),deleteProduct:id=>api.delete(`/products/${id}`)};
