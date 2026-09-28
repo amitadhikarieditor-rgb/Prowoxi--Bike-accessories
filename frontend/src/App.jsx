@@ -23,6 +23,8 @@ import Reviews from './admin/Reviews';
 import Coupons from './admin/Coupons';
 import Profile from "./pages/Profile.jsx";
 import bikes from "./pages/bikes.jsx";
+import BikeProducts from './pages/BikeProducts';
+import notFount from "./pages/notFound.jsx";
 
 export default function App(){
     return <BrowserRouter>
@@ -46,6 +48,8 @@ export default function App(){
         <Route path="/notifications" element={<Notifications/>}/>
         <Route path="/profile" element={<Profile />} />
         <Route path="/bikes" element={<bikes />} />
+        <Route path="/bikes/:bike" element={<BikeProducts />}/>
+        <Route path="/bikes/:bike" element={<notFound />}/>
 
         </Route>
         

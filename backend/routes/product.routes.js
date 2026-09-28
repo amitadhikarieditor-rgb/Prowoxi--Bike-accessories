@@ -16,6 +16,7 @@ r.get('/:id',asyncHandler(c.getOne));
 
 r.post('/',requireAuth,requireRole('admin'),upload.array('images', 5),asyncHandler(c.adminCreate));
 
-r.patch('/:id',requireAuth,requireRole('admin'),asyncHandler(c.adminUpdate));
+r.patch('/:id',requireAuth,requireRole('admin'),upload.array('images', 5),asyncHandler(c.adminUpdate)
+);
 
 r.delete('/:id',requireAuth,requireRole('admin'),asyncHandler(c.adminDelete));export default r;

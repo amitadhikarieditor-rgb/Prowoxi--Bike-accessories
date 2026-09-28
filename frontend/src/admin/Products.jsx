@@ -1,208 +1,645 @@
 import React, { useEffect, useState } from 'react';
 import { admin, products } from '../api/resources';
 
+const bikes = [
+    {
+        name: 'Royal Enfield',
+        value: 'royal-enfield'
+    },
+    {
+        name: 'KTM',
+        value: 'ktm'
+    },
+    {
+        name: 'Yamaha',
+        value: 'yamaha'
+    },
+    {
+        name: 'Honda',
+        value: 'honda'
+    },
+    {
+        name: 'Bajaj',
+        value: 'bajaj'
+    }
+];
+
 export default function Products() {
+
     const [d, setD] = useState([]);
+
     const [showForm, setShowForm] = useState(false);
+
+    const [editingId, setEditingId] = useState(null);
+
     const [saving, setSaving] = useState(false);
+
     const [message, setMessage] = useState('');
+
     const [error, setError] = useState('');
+
     const [categories, setCategories] = useState([]);
 
-   const [form, setForm] = useState({
-    name: '',
-    slug: '',
-    description: '',
-    category: '',
-    price: '',
-    compareAtPrice: '',
-    stock: '',
-    images: [],
-    tags: '',
-    featured: false
-});
+    const [form, setForm] = useState({
+        name: '',
+        slug: '',
+        description: '',
+        bike: '',
+        category: '',
+        price: '',
+        compareAtPrice: '',
+        stock: '',
+        images: [],
+        tags: '',
+        featured: false
+    });
 
-    const load = () =>
-        products.list({ limit: 100 }).then(r => setD(r.data.data));
 
-    const loadCategories = () =>
-    products.categories().then(r => setCategories(r.data.data));
+    // =========================
+    // LOAD PRODUCTS
+    // =========================
+
+    const load = () => {
+
+        products.list({ limit: 100 })
+            .then(r => setD(r.data.data));
+
+    };
+
+
+    // =========================
+    // LOAD CATEGORIES
+    // =========================
+
+    const loadCategories = () => {
+
+        products.categories()
+            .then(r => setCategories(r.data.data));
+
+    };
+
 
     useEffect(() => {
+
         load();
+        loadCategories();
+
     }, []);
 
-    useEffect(() => {
-  load();
-  loadCategories();
-}, []);
+
+    // =========================
+    // HANDLE INPUT
+    // =========================
 
     const handleChange = e => {
-        const { name, value, type, checked } = e.target;
+
+        const {
+            name,
+            value,
+            type,
+            checked
+        } = e.target;
 
         setForm(prev => ({
             ...prev,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: type === 'checkbox'
+                ? checked
+                : value
         }));
+
     };
 
+
+    // =========================
+    // IMAGE CHANGE
+    // =========================
+
     const handleImageChange = e => {
+
         setForm(prev => ({
             ...prev,
             images: Array.from(e.target.files).slice(0, 5)
         }));
+
     };
 
+
+    // =========================
+    // RESET FORM
+    // =========================
+
+    const resetForm = () => {
+
+        setForm({
+            name: '',
+            slug: '',
+            description: '',
+            bike: '',
+            category: '',
+            price: '',
+            compareAtPrice: '',
+            stock: '',
+            images: [],
+            tags: '',
+            featured: false
+        });
+
+        setEditingId(null);
+
+    };
+
+
+    // =========================
+    // EDIT PRODUCT
+    // =========================
+
+    const editProduct = product => {
+
+        setEditingId(product._id);
+
+        setForm({
+            name: product.name || '',
+
+            slug: product.slug || '',
+
+            description: product.description || '',
+
+            bike: product.bike || '',
+
+            category:
+                product.category?._id ||
+                product.category ||
+                '',
+
+            price: product.price ?? '',
+
+            compareAtPrice:
+                product.compareAtPrice ?? '',
+
+            stock: product.stock ?? '',
+
+            images: [],
+
+            tags: Array.isArray(product.tags)
+                ? product.tags.join(', ')
+                : '',
+
+            featured: Boolean(product.featured)
+        });
+
+        setShowForm(true);
+
+        setError('');
+
+        setMessage('');
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+
+    };
+
+
+    // =========================
+    // SUBMIT
+    // =========================
+
     const handleSubmit = async e => {
+
         e.preventDefault();
 
         setSaving(true);
+
         setMessage('');
+
         setError('');
 
 
         try {
+
             const formData = new FormData();
 
-            const slug = form.name
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
 
-            formData.append('name', form.name.trim());
-            formData.append('slug', slug);
-            formData.append('description', form.description.trim());
-            formData.append('category', form.category.trim());
-            formData.append('price', form.price);
-            formData.append('stock', form.stock);
-            formData.append('featured', form.featured);
+            // =========================
+            // SLUG
+            // =========================
+
+            const slug = form.name
+                .toLowerCase()
+                .trim()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-|-$/g, '');
+
+
+            // =========================
+            // BASIC DATA
+            // =========================
+
+            formData.append(
+                'name',
+                form.name.trim()
+            );
+
+            formData.append(
+                'slug',
+                slug
+            );
+
+            formData.append(
+                'description',
+                form.description.trim()
+            );
+
+            formData.append(
+                'bike',
+                form.bike
+            );
+
+            formData.append(
+                'category',
+                form.category
+            );
+
+            formData.append(
+                'price',
+                form.price
+            );
+
+            formData.append(
+                'stock',
+                form.stock
+            );
+
+            formData.append(
+                'featured',
+                form.featured
+            );
+
+
+            // =========================
+            // COMPARE PRICE
+            // =========================
 
             if (form.compareAtPrice !== '') {
-                formData.append('compareAtPrice', form.compareAtPrice);
+
+                formData.append(
+                    'compareAtPrice',
+                    form.compareAtPrice
+                );
+
             }
 
+
+            // =========================
+            // IMAGES
+            // =========================
+
             form.images.forEach(image => {
-                formData.append('images', image);
+
+                formData.append(
+                    'images',
+                    image
+                );
+
             });
 
+
+            // =========================
+            // TAGS
+            // =========================
+
             if (form.tags) {
+
                 form.tags
                     .split(',')
                     .map(tag => tag.trim())
                     .filter(Boolean)
                     .forEach(tag => {
-                        formData.append('tags', tag);
+
+                        formData.append(
+                            'tags',
+                            tag
+                        );
+
                     });
+
             }
 
-            await admin.createProduct(formData);
 
-            setMessage('Product added successfully.');
+            // =========================
+            // UPDATE
+            // =========================
 
-            setForm({
-                name: '',
-                description: '',
-                category: '',
-                price: '',
-                compareAtPrice: '',
-                stock: '',
-                images: [],
-                tags: '',
-                featured: false
-            });
+            if (editingId) {
+
+                await admin.updateProduct(
+                    editingId,
+                    formData
+                );
+
+                setMessage(
+                    'Product updated successfully.'
+                );
+
+            }
+
+
+            // =========================
+            // CREATE
+            // =========================
+
+            else {
+
+                await admin.createProduct(
+                    formData
+                );
+
+                setMessage(
+                    'Product added successfully.'
+                );
+
+            }
+
+
+            // =========================
+            // RESET
+            // =========================
+
+            resetForm();
 
             await load();
 
+
             setTimeout(() => {
+
                 setShowForm(false);
+
                 setMessage('');
+
             }, 1000);
 
+
         } catch (err) {
+
             setError(
                 err.response?.data?.message ||
-                'Failed to add product.'
+                'Failed to save product.'
             );
+
         } finally {
+
             setSaving(false);
+
         }
+
     };
+
+
+    // =========================
+    // ARCHIVE
+    // =========================
 
     const archiveProduct = async id => {
+
         await admin.deleteProduct(id);
+
         load();
+
     };
 
+
+    // =========================
+    // CANCEL
+    // =========================
+
+    const cancelForm = () => {
+
+        resetForm();
+
+        setShowForm(false);
+
+        setError('');
+
+        setMessage('');
+
+    };
+
+
     return (
+
         <section className="admin-products">
 
+
+            {/* =========================
+                HEADER
+            ========================= */}
+
             <div className="section-head">
+
                 <div>
-                    <span className="eyebrow">INVENTORY</span>
-                    <h1>Products</h1>
+
+                    <span className="eyebrow">
+                        INVENTORY
+                    </span>
+
+                    <h1>
+                        Products
+                    </h1>
+
                     <p className="muted">
                         Manage your Provoxi product catalog.
                     </p>
+
                 </div>
+
 
                 <button
                     className="btn"
                     onClick={() => {
-                        setShowForm(!showForm);
-                        setError('');
-                        setMessage('');
+
+                        if (showForm) {
+
+                            cancelForm();
+
+                        } else {
+
+                            resetForm();
+
+                            setShowForm(true);
+
+                        }
+
                     }}
                 >
-                    {showForm ? 'Close' : '+ Add Product'}
+
+                    {showForm
+                        ? 'Close'
+                        : '+ Add Product'}
+
                 </button>
+
             </div>
 
+
+
+            {/* =========================
+                PRODUCT FORM
+            ========================= */}
+
             {showForm && (
+
                 <div className="product-form-card">
 
+
                     <div className="form-header">
+
                         <div>
-                            <span className="eyebrow">NEW PRODUCT</span>
-                            <h2>Add Product</h2>
+
+                            <span className="eyebrow">
+
+                                {editingId
+                                    ? 'EDIT PRODUCT'
+                                    : 'NEW PRODUCT'}
+
+                            </span>
+
+
+                            <h2>
+
+                                {editingId
+                                    ? 'Update Product'
+                                    : 'Add Product'}
+
+                            </h2>
+
+
                             <p className="muted">
-                                Add a new item to your Provoxi catalog.
+
+                                {editingId
+                                    ? 'Update the existing product details.'
+                                    : 'Add a new item to your Provoxi catalog.'}
+
                             </p>
+
                         </div>
+
                     </div>
+
+
 
                     <form onSubmit={handleSubmit}>
 
+
                         <div className="form-grid">
 
+
+                            {/* PRODUCT NAME */}
+
                             <div className="form-group full">
-                                <label>Product Name</label>
+
+                                <label>
+                                    Product Name
+                                </label>
+
                                 <input
                                     name="name"
                                     value={form.name}
                                     onChange={handleChange}
-                                    placeholder="e.g. Premium Riding Gloves"
+                                    placeholder="e.g. Royal Enfield Classic 350 Leg Guard"
                                     required
                                 />
+
                             </div>
 
-                            <select
-  name="category"
-  value={form.category}
-  onChange={handleChange}
-  required
->
-  <option value="">Select Category</option>
 
-  {categories.map((category) => (
-    <option key={category._id} value={category._id}>
-      {category.name}
-    </option>
-  ))}
-</select>
+
+                            {/* BIKE */}
 
                             <div className="form-group">
-                                <label>Stock</label>
+
+                                <label>
+                                    Bike
+                                </label>
+
+                                <select
+                                    name="bike"
+                                    value={form.bike}
+                                    onChange={handleChange}
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select Bike
+                                    </option>
+
+
+                                    {bikes.map(bike => (
+
+                                        <option
+                                            key={bike.value}
+                                            value={bike.value}
+                                        >
+
+                                            {bike.name}
+
+                                        </option>
+
+                                    ))}
+
+                                </select>
+
+                            </div>
+
+
+
+                            {/* CATEGORY */}
+
+                            <div className="form-group">
+
+                                <label>
+                                    Category
+                                </label>
+
+                                <select
+                                    name="category"
+                                    value={form.category}
+                                    onChange={handleChange}
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select Category
+                                    </option>
+
+
+                                    {categories.map(category => (
+
+                                        <option
+                                            key={category._id}
+                                            value={category._id}
+                                        >
+
+                                            {category.name}
+
+                                        </option>
+
+                                    ))}
+
+                                </select>
+
+                            </div>
+
+
+
+                            {/* STOCK */}
+
+                            <div className="form-group">
+
+                                <label>
+                                    Stock
+                                </label>
+
                                 <input
                                     type="number"
                                     name="stock"
@@ -212,10 +649,19 @@ export default function Products() {
                                     min="0"
                                     required
                                 />
+
                             </div>
 
+
+
+                            {/* PRICE */}
+
                             <div className="form-group">
-                                <label>Price (₹)</label>
+
+                                <label>
+                                    Price (₹)
+                                </label>
+
                                 <input
                                     type="number"
                                     name="price"
@@ -225,10 +671,19 @@ export default function Products() {
                                     min="0"
                                     required
                                 />
+
                             </div>
 
+
+
+                            {/* COMPARE PRICE */}
+
                             <div className="form-group">
-                                <label>Compare At Price (₹)</label>
+
+                                <label>
+                                    Compare At Price (₹)
+                                </label>
+
                                 <input
                                     type="number"
                                     name="compareAtPrice"
@@ -237,10 +692,19 @@ export default function Products() {
                                     placeholder="1999"
                                     min="0"
                                 />
+
                             </div>
 
+
+
+                            {/* DESCRIPTION */}
+
                             <div className="form-group full">
-                                <label>Description</label>
+
+                                <label>
+                                    Description
+                                </label>
+
                                 <textarea
                                     name="description"
                                     value={form.description}
@@ -249,12 +713,19 @@ export default function Products() {
                                     rows="5"
                                     required
                                 />
+
                             </div>
 
-                            {/* IMAGE UPLOAD */}
+
+
+                            {/* IMAGES */}
 
                             <div className="form-group full">
-                                <label>Product Images</label>
+
+                                <label>
+                                    Product Images
+                                </label>
+
 
                                 <div className="image-upload-box">
 
@@ -267,7 +738,9 @@ export default function Products() {
                                     />
 
                                     <strong>
-                                        Upload Product Images
+                                        {editingId
+                                            ? 'Upload New Images'
+                                            : 'Upload Product Images'}
                                     </strong>
 
                                     <small>
@@ -276,28 +749,46 @@ export default function Products() {
 
                                 </div>
 
+
+                                {/* NEW IMAGE PREVIEW */}
+
                                 {form.images.length > 0 && (
+
                                     <div className="selected-images">
 
-                                        {form.images.map((image, index) => (
-                                            <div
-                                                className="image-preview"
-                                                key={index}
-                                            >
-                                                <img
-                                                    src={URL.createObjectURL(image)}
-                                                    alt={`Preview ${index + 1}`}
-                                                />
-                                            </div>
-                                        ))}
+                                        {form.images.map(
+                                            (image, index) => (
+
+                                                <div
+                                                    className="image-preview"
+                                                    key={index}
+                                                >
+
+                                                    <img
+                                                        src={URL.createObjectURL(image)}
+                                                        alt={`Preview ${index + 1}`}
+                                                    />
+
+                                                </div>
+
+                                            )
+                                        )}
 
                                     </div>
+
                                 )}
 
                             </div>
 
+
+
+                            {/* TAGS */}
+
                             <div className="form-group full">
-                                <label>Tags</label>
+
+                                <label>
+                                    Tags
+                                </label>
 
                                 <input
                                     name="tags"
@@ -309,7 +800,12 @@ export default function Products() {
                                 <small>
                                     Separate tags with commas.
                                 </small>
+
                             </div>
+
+
+
+                            {/* FEATURED */}
 
                             <label className="featured-toggle">
 
@@ -321,81 +817,171 @@ export default function Products() {
                                 />
 
                                 <span>
-                                    <strong>Featured Product</strong>
+
+                                    <strong>
+                                        Featured Product
+                                    </strong>
 
                                     <small>
                                         Show this product as a featured item.
                                     </small>
+
                                 </span>
 
                             </label>
 
+
                         </div>
 
+
+
+                        {/* SUCCESS */}
+
                         {message && (
+
                             <div className="form-success">
                                 ✓ {message}
                             </div>
+
                         )}
 
+
+
+                        {/* ERROR */}
+
                         {error && (
+
                             <div className="form-error">
                                 {error}
                             </div>
+
                         )}
 
+
+
+                        {/* ACTIONS */}
+
                         <div className="form-actions">
+
 
                             <button
                                 type="button"
                                 className="btn secondary"
-                                onClick={() => setShowForm(false)}
+                                onClick={cancelForm}
                             >
                                 Cancel
                             </button>
+
 
                             <button
                                 type="submit"
                                 className="btn"
                                 disabled={saving}
                             >
-                                {saving ? 'Uploading...' : 'Add Product'}
+
+                                {saving
+                                    ? 'Saving...'
+                                    : editingId
+                                        ? 'Update Product'
+                                        : 'Add Product'}
+
                             </button>
 
                         </div>
 
+
                     </form>
+
                 </div>
+
             )}
+
+
+
+            {/* =========================
+                PRODUCT TABLE
+            ========================= */}
 
             <div className="table-wrap">
 
                 <table>
 
                     <thead>
+
                         <tr>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                            <th>Active</th>
-                            <th></th>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Bike
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Price
+                            </th>
+
+                            <th>
+                                Stock
+                            </th>
+
+                            <th>
+                                Active
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
                         </tr>
+
                     </thead>
+
+
 
                     <tbody>
 
                         {d.map(p => (
+
                             <tr key={p._id}>
 
+
                                 <td>
-                                    <strong>{p.name}</strong>
+
+                                    <strong>
+                                        {p.name}
+                                    </strong>
+
                                 </td>
 
-                                <td>₹{p.price}</td>
-
-                                <td>{p.stock}</td>
 
                                 <td>
+                                    {p.bike}
+                                </td>
+
+
+                                <td>
+                                    {p.category?.name || '-'}
+                                </td>
+
+
+                                <td>
+                                    ₹{p.price}
+                                </td>
+
+
+                                <td>
+                                    {p.stock}
+                                </td>
+
+
+                                <td>
+
                                     <span
                                         className={`status ${
                                             p.isActive
@@ -403,24 +989,53 @@ export default function Products() {
                                                 : 'inactive'
                                         }`}
                                     >
+
                                         {p.isActive
                                             ? 'Active'
                                             : 'Inactive'}
+
                                     </span>
+
                                 </td>
+
+
+                                {/* ACTIONS */}
 
                                 <td>
-                                    <button
-                                        className="link-btn"
-                                        onClick={() =>
-                                            archiveProduct(p._id)
-                                        }
+
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            gap: '10px'
+                                        }}
                                     >
-                                        Archive
-                                    </button>
+
+                                        <button
+                                            className="link-btn"
+                                            onClick={() =>
+                                                editProduct(p)
+                                            }
+                                        >
+                                            Update
+                                        </button>
+
+
+                                        <button
+                                            className="link-btn"
+                                            onClick={() =>
+                                                archiveProduct(p._id)
+                                            }
+                                        >
+                                            Archive
+                                        </button>
+
+                                    </div>
+
                                 </td>
 
+
                             </tr>
+
                         ))}
 
                     </tbody>
@@ -429,6 +1044,9 @@ export default function Products() {
 
             </div>
 
+
         </section>
+
     );
+
 }

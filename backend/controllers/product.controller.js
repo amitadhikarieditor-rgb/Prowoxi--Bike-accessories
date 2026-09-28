@@ -9,7 +9,12 @@ export async function list(req,res){
     const key=`products:${JSON.stringify(req.query)}`
     ;const cached=await cache.get(key);
     if(cached)return res.json(cached);
+
     const filter={isActive:true};
+
+    if (req.query.bike)
+    filter.bike = req.query.bike;
+
     if(req.query.category)
         filter.category=req.query.category;
     if(req.query.minPrice)
@@ -55,9 +60,62 @@ export async function adminCreate(req, res) {
     });
 }
 
-export async function adminUpdate(req,res){
-    const p=await Product.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true});
-    if(!p)throw new AppError('Product not found',404);res.json({success:true,message:'Product updated',data:p});}
+export async function adminUpdate(req, res) {
+
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+        throw new AppError(
+            'Product not found',
+            404,
+            'PRODUCT_NOT_FOUND'
+        );
+    }
+
+    const updates = {
+        name: req.body.name,
+        slug: req.body.slug,
+        description: req.body.description,
+        bike: req.body.bike,
+        category: req.body.category,
+        price: Number(req.body.price),
+        stock: Number(req.body.stock),
+        featured: req.body.featured === 'true'
+    };
+
+    if (req.body.compareAtPrice !== undefined) {
+        updates.compareAtPrice =
+            req.body.compareAtPrice === ''
+                ? undefined
+                : Number(req.body.compareAtPrice);
+    }
+
+    if (req.body.tags !== undefined) {
+        updates.tags = Array.isArray(req.body.tags)
+            ? req.body.tags
+            : [req.body.tags];
+    }
+    if (req.files?.length) {
+        updates.images = req.files.map(file => file.path);
+    }
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        updates,
+        {
+            new: true,
+            runValidators: true
+        }
+    );
+
+    await cache.del('products:*');
+
+    res.json({
+        success: true,
+        message: 'Product updated successfully',
+        data: updatedProduct
+    });
+}
 
 export async function adminDelete(req,res){
     await Product.findByIdAndUpdate(req.params.id,{isActive:false});

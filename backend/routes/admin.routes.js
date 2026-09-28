@@ -18,4 +18,11 @@ r.get('/coupons',asyncHandler(c.coupons));
 
 r.post('/coupons',asyncHandler(c.createCoupon));
 
+r.delete(
+    '/coupons/:id',
+    requireAuth,
+    requireRole('admin'),
+    asyncHandler(c.deleteCoupon)
+);
+
 export default r;

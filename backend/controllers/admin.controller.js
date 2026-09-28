@@ -19,3 +19,18 @@ import Product from '../models/Product.js';
              export async function coupons(req,res){res.json({success:true,data:await Coupon.find().sort('-createdAt')});}
              
              export async function createCoupon(req,res){res.status(201).json({success:true,data:await Coupon.create({...req.body,code:req.body.code.toUpperCase()})});}
+export async function deleteCoupon(req, res) {
+    const coupon = await Coupon.findByIdAndDelete(req.params.id);
+
+    if (!coupon) {
+        return res.status(404).json({
+            success: false,
+            message: 'Coupon not found'
+        });
+    }
+
+    res.json({
+        success: true,
+        message: 'Coupon deleted successfully'
+    });
+}

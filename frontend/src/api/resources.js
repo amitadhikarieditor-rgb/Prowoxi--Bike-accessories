@@ -139,5 +139,8 @@ export const admin = {
         api.patch(`/products/${id}`, data),
 
     deleteProduct: id =>
-        api.delete(`/products/${id}`)
+        api.delete(`/products/${id}`),
+
+    deleteCoupon: id =>
+    api.delete(`/admin/coupons/${id}`),
 };
