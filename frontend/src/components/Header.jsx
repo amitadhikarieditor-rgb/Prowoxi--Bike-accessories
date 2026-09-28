@@ -2,6 +2,7 @@ import {Link,useNavigate} from 'react-router-dom';
 import {ShoppingBag,Heart,UserRound,LogOut,LayoutDashboard} from 'lucide-react';
 import {useAuth} from '../contexts/AuthContext';
 import {useCart} from '../contexts/CartContext';
+import React from "react";
 export default function Header(){
     const {user,logout}=useAuth();
     const {cart}=useCart();const nav=useNavigate();
@@ -27,5 +28,7 @@ export default function Header(){
                     <LogOut size={18}/>
                     </button></>:<><Link to="/login">Login</Link>
                     <Link className="btn small" to="/register">Get started</Link></>}</nav>
-                    </header>}
-import React from "react";
+                    </header>
+                    }
+
+

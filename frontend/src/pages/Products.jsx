@@ -14,8 +14,8 @@ const load=()=>{setLoading(true);
     return <section><div className="section-head">
         <div><span className="eyebrow">CATALOG</span><h1>Shop Provoxi</h1></div>
         <div className="filters">
-            <input value={q} onChange={e=>setQ(e.target.value)} onKeyDown={e=>e.key==='Enter'&&load()} placeholder="Search products…"/>
-            <select value={sort} onChange={e=>setSort(e.target.value)}>
+            <input className="search" value={q} onChange={e=>setQ(e.target.value)} onKeyDown={e=>e.key==='Enter'&&load()} placeholder="Search products…"/>
+            <select className="sort-drop" value={sort} onChange={e=>setSort(e.target.value)}>
                 <option value="newest">Newest</option>
                 <option value="price_asc">Price: low to high</option>
                 <option value="price_desc">Price: high to low</option>
