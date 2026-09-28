@@ -7,25 +7,35 @@ export default function Products() {
     const [saving, setSaving] = useState(false);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+    const [categories, setCategories] = useState([]);
 
-    const [form, setForm] = useState({
-        name: '',
-        description: '',
-        category: '',
-        price: '',
-        compareAtPrice: '',
-        stock: '',
-        images: [],
-        tags: '',
-        featured: false
-    });
+   const [form, setForm] = useState({
+    name: '',
+    slug: '',
+    description: '',
+    category: '',
+    price: '',
+    compareAtPrice: '',
+    stock: '',
+    images: [],
+    tags: '',
+    featured: false
+});
 
     const load = () =>
         products.list({ limit: 100 }).then(r => setD(r.data.data));
 
+    const loadCategories = () =>
+    products.categories().then(r => setCategories(r.data.data));
+
     useEffect(() => {
         load();
     }, []);
+
+    useEffect(() => {
+  load();
+  loadCategories();
+}, []);
 
     const handleChange = e => {
         const { name, value, type, checked } = e.target;
@@ -50,10 +60,18 @@ export default function Products() {
         setMessage('');
         setError('');
 
+
         try {
             const formData = new FormData();
 
+            const slug = form.name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+
             formData.append('name', form.name.trim());
+            formData.append('slug', slug);
             formData.append('description', form.description.trim());
             formData.append('category', form.category.trim());
             formData.append('price', form.price);
@@ -168,16 +186,20 @@ export default function Products() {
                                 />
                             </div>
 
-                            <div className="form-group">
-                                <label>Category</label>
-                                <input
-                                    name="category"
-                                    value={form.category}
-                                    onChange={handleChange}
-                                    placeholder="e.g. Gloves"
-                                    required
-                                />
-                            </div>
+                            <select
+  name="category"
+  value={form.category}
+  onChange={handleChange}
+  required
+>
+  <option value="">Select Category</option>
+
+  {categories.map((category) => (
+    <option key={category._id} value={category._id}>
+      {category.name}
+    </option>
+  ))}
+</select>
 
                             <div className="form-group">
                                 <label>Stock</label>
