@@ -22,6 +22,7 @@ import AdminOrders from './admin/Orders';
 import Reviews from './admin/Reviews';
 import Coupons from './admin/Coupons';
 import Profile from "./pages/Profile.jsx";
+import bikes from "./pages/bikes.jsx";
 
 export default function App(){
     return <BrowserRouter>
@@ -44,6 +45,8 @@ export default function App(){
         <Route path="/addresses" element={<Addresses/>}/>
         <Route path="/notifications" element={<Notifications/>}/>
         <Route path="/profile" element={<Profile />} />
+        <Route path="/bikes" element={<bikes />} />
+
         </Route>
         
         </Route>
