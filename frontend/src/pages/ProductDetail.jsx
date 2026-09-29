@@ -3,9 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { products, reviews } from '../api/resources';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
-import React from "react"
+import React from 'react';
 
 export default function ProductDetail() {
+
     const { id } = useParams();
     const nav = useNavigate();
 
@@ -14,19 +15,54 @@ export default function ProductDetail() {
 
     const [p, setP] = useState(null);
     const [rs, setRs] = useState([]);
+
     const [qty, setQty] = useState(1);
     const [body, setBody] = useState('');
     const [rating, setRating] = useState(5);
 
+    const [currentImage, setCurrentImage] = useState(0);
+
     useEffect(() => {
-        products.get(id).then(r => setP(r.data.data));
-        reviews.list(id).then(r => setRs(r.data.data));
+
+        products.get(id)
+            .then(r => setP(r.data.data));
+
+        reviews.list(id)
+            .then(r => setRs(r.data.data));
+
     }, [id]);
 
-    if (!p) return <p>Loading…</p>;
+    if (!p) {
+        return <p>Loading…</p>;
+    }
+
+    const images = p.images || [];
+
+    const nextImage = () => {
+
+        setCurrentImage(prev =>
+            prev === images.length - 1
+                ? 0
+                : prev + 1
+        );
+
+    };
+
+    const prevImage = () => {
+
+        setCurrentImage(prev =>
+            prev === 0
+                ? images.length - 1
+                : prev - 1
+        );
+
+    };
 
     const addCart = async () => {
-        if (!user) return nav('/login');
+
+        if (!user) {
+            return nav('/login');
+        }
 
         await add({
             productId: p._id,
@@ -37,52 +73,152 @@ export default function ProductDetail() {
     };
 
     const review = async e => {
+
         e.preventDefault();
 
-        if (!user) return nav('/login');
+        if (!user) {
+            return nav('/login');
+        }
 
         const r = await reviews.create(id, {
             rating: Number(rating),
             body
         });
 
-        setRs(x => [r.data.data, ...x]);
+        setRs(x => [
+            r.data.data,
+            ...x
+        ]);
+
         setBody('');
     };
 
     return (
+
         <section className="detail">
-            <div>
-                <img
-                    className="detail-img"
-                    src={p.images?.[0]}
-                    alt={p.name}
-                />
+
+            {/* =========================
+                PRODUCT IMAGE SLIDER
+            ========================== */}
+
+            <div className="product-slider-card">
+
+                <div className="product-slider">
+
+                    {/* PREVIOUS */}
+
+                    <button
+                        className="slider-btn slider-prev"
+                        onClick={prevImage}
+                        disabled={images.length <= 1}
+                    >
+                        ‹
+                    </button>
+
+
+                    {/* IMAGE */}
+
+                    {images.length > 0 && (
+
+                        <img
+                            key={currentImage}
+                            className="detail-img"
+                            src={images[currentImage]}
+                            alt={`${p.name} ${currentImage + 1}`}
+                        />
+
+                    )}
+
+
+                    {/* NEXT */}
+
+                    <button
+                        className="slider-btn slider-next"
+                        onClick={nextImage}
+                        disabled={images.length <= 1}
+                    >
+                        ›
+                    </button>
+
+                </div>
+
+
+                {/* =========================
+                    SLIDER DOTS
+                ========================== */}
+
+                {images.length > 1 && (
+
+                    <div className="slider-dots">
+
+                        {images.map((_, index) => (
+
+                            <button
+                                key={index}
+                                className={
+                                    index === currentImage
+                                        ? 'slider-dot active'
+                                        : 'slider-dot'
+                                }
+                                onClick={() =>
+                                    setCurrentImage(index)
+                                }
+                            />
+
+                        ))}
+
+                    </div>
+
+                )}
+
             </div>
 
-            <div>
-                <span className="eyebrow">{p.category?.name}</span>
 
-                <h1>{p.name}</h1>
+            {/* =========================
+                PRODUCT INFORMATION
+            ========================== */}
+
+            <div className="product-info">
+
+                <span className="eyebrow">
+                    {p.category?.name}
+                </span>
+
+                <h1>
+                    {p.name}
+                </h1>
 
                 <div className="price">
                     ₹{p.price.toLocaleString('en-IN')}
                 </div>
 
                 <p className="muted">
-                    ★ {p.ratingAverage?.toFixed(1) || '0.0'} ·{' '}
+
+                    ★ {p.ratingAverage?.toFixed(1) || '0.0'}
+
+                    {' · '}
+
                     {p.ratingCount || 0} reviews
+
                 </p>
 
-                <p>{p.description}</p>
+                <p>
+                    {p.description}
+                </p>
+
+
+                {/* BUY */}
 
                 <div className="buy-row">
+
                     <input
                         type="number"
                         min="1"
                         max={p.stock}
                         value={qty}
-                        onChange={e => setQty(Number(e.target.value))}
+                        onChange={e =>
+                            setQty(Number(e.target.value))
+                        }
                     />
 
                     <button
@@ -90,54 +226,113 @@ export default function ProductDetail() {
                         disabled={!p.stock}
                         onClick={addCart}
                     >
-                        {p.stock ? 'Add to cart' : 'Out of stock'}
+                        {p.stock
+                            ? 'Add to cart'
+                            : 'Out of stock'}
                     </button>
+
                 </div>
+
             </div>
 
+
+            {/* =========================
+                REVIEWS
+            ========================== */}
+
             <div className="reviews">
-                <h2>Reviews</h2>
+
+                <h2>
+                    Reviews
+                </h2>
+
+
+                {/* REVIEW FORM */}
 
                 {user && (
-                    <form onSubmit={review} className="form">
+
+                    <form
+                        onSubmit={review}
+                        className="form"
+                    >
+
                         <select
                             value={rating}
-                            onChange={e => setRating(e.target.value)}
+                            onChange={e =>
+                                setRating(e.target.value)
+                            }
                         >
+
                             {[5, 4, 3, 2, 1].map(n => (
-                                <option key={n}>{n}</option>
+
+                                <option
+                                    key={n}
+                                    value={n}
+                                >
+                                    {n}
+                                </option>
+
                             ))}
+
                         </select>
+
 
                         <textarea
                             value={body}
-                            onChange={e => setBody(e.target.value)}
+                            onChange={e =>
+                                setBody(e.target.value)
+                            }
                             required
                             placeholder="Share your experience"
                         />
 
+
                         <button className="btn">
                             Submit review
                         </button>
+
                     </form>
+
                 )}
 
+
+                {/* REVIEWS LIST */}
+
                 {rs.map(r => (
-                    <article className="review" key={r._id}>
+
+                    <article
+                        className="review"
+                        key={r._id}
+                    >
+
                         <strong>
                             {r.user?.name || 'Customer'}
                         </strong>
 
-                        <span> ★ {r.rating}</span>
+                        <span>
+                            {' '}★ {r.rating}
+                        </span>
 
-                        <p>{r.body}</p>
+                        <p>
+                            {r.body}
+                        </p>
 
                         {r.verifiedPurchase && (
-                            <small>Verified purchase</small>
+
+                            <small>
+                                Verified purchase
+                            </small>
+
                         )}
+
                     </article>
+
                 ))}
+
             </div>
+
         </section>
+
     );
+
 }
