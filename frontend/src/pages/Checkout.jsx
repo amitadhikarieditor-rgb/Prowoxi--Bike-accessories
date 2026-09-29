@@ -41,6 +41,25 @@ export default function Checkout() {
                     currency: p.currency,
                     order_id: p.orderId,
 
+                    config: {
+                        display: {
+                            blocks: {
+                                upi: {
+                                    name: 'Pay using UPI',
+                                    instruments: [
+                                        {
+                                            method: 'upi'
+                                        }
+                                    ]
+                                }
+                            },
+                            sequence: ['block.upi'],
+                            preferences: {
+                                show_default_blocks: true
+                            }
+                        }
+                    },
+
                     handler: async (resp) => {
                         await orders.verify({
                             orderId: r.data.data.order._id,
@@ -92,7 +111,9 @@ export default function Checkout() {
                                 <strong>{a.fullName}</strong>
                                 <br />
 
-                                {a.line1}, {a.city}, {a.state} {a.postalCode}
+                                {a.line1}, {a.city}, {a.state}{' '}
+                                {a.postalCode}
+
                                 <br />
 
                                 {a.phone}
@@ -102,7 +123,8 @@ export default function Checkout() {
 
                     {!as.length && (
                         <p>
-                            No address yet. Add one from your account/profile area.
+                            No address yet. Add one from your
+                            account/profile area.
                         </p>
                     )}
 
@@ -126,7 +148,9 @@ export default function Checkout() {
                         {(
                             cart?.items?.reduce(
                                 (s, i) =>
-                                    s + i.product.price * i.quantity,
+                                    s +
+                                    i.product.price *
+                                    i.quantity,
                                 0
                             ) || 0
                         ).toLocaleString('en-IN')}

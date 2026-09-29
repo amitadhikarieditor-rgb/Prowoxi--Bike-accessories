@@ -3,6 +3,7 @@ import Product from '../models/Product.js';
  import Order from '../models/Order.js'; 
  import Review from '../models/Review.js'; 
  import Coupon from '../models/Coupon.js'; 
+ import { AppError } from '../utils/appError.js';
  export async function dashboard(req,res){
     const [users,products,orders,revenue]=await Promise.all([User.countDocuments(),
         Product.countDocuments({isActive:true}),
@@ -32,5 +33,83 @@ export async function deleteCoupon(req, res) {
     res.json({
         success: true,
         message: 'Coupon deleted successfully'
+    });
+};
+
+export async function orders(req, res) {
+    const data = await Order
+        .find()
+        .populate('user', 'name email')
+        .sort('-createdAt')
+        .limit(200);
+
+    res.json({
+        success: true,
+        data
+    });
+}
+
+export async function updateOrderStatus(req, res) {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+        throw new AppError(
+            'Order not found',
+            404
+        );
+    }
+
+    const valid = {
+        PENDING_PAYMENT: ['PAID', 'CANCELLED'],
+        PAID: ['PROCESSING', 'CANCELLED'],
+        PROCESSING: ['PACKED'],
+        PACKED: ['SHIPPED'],
+        SHIPPED: ['OUT_FOR_DELIVERY'],
+        OUT_FOR_DELIVERY: ['DELIVERED'],
+        DELIVERED: [],
+        CANCELLED: []
+    };
+
+    if (!valid[order.orderStatus]?.includes(req.body.status)) {
+        throw new AppError(
+            `Cannot move ${order.orderStatus} to ${req.body.status}`,
+            400
+        );
+    }
+
+    order.orderStatus = req.body.status;
+
+    order.history.push({
+        status: req.body.status,
+        note: `Order status changed to ${req.body.status}`
+    });
+
+    await order.save();
+
+    res.json({
+        success: true,
+        data: order
+    });
+}
+
+export async function deleteOrder(req, res) {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+        throw new AppError('Order not found', 404);
+    }
+
+    if (order.orderStatus !== 'DELIVERED') {
+        throw new AppError(
+            'Only delivered orders can be deleted',
+            400
+        );
+    }
+
+    await order.deleteOne();
+
+    res.json({
+        success: true,
+        message: 'Order deleted successfully'
     });
 }

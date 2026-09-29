@@ -2,16 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import bikeVideo from '../styles/mixkit-man-traveling-by-motorcycle-on-an-empty-road-39912-full-hd.mp4';
+import { LogOut } from 'lucide-react';
 
 export default function Profile() {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
 
     return (
         <section className="profile-page">
             <div className="profile-video-bg">
                 <video autoPlay muted loop playsInline>
-    <source src={bikeVideo} type="video/mp4" />
-</video>
+                    <source src={bikeVideo} type="video/mp4" />
+                </video>
             </div>
 
             <div className="profile-content">
@@ -47,6 +48,17 @@ export default function Profile() {
                         </div>
 
                     </div>
+
+                   <button
+    className="icon-btn logout-btn"
+    onClick={async () => {
+        await logout();
+    }}
+    title="Logout"
+>
+    <LogOut size={20} />
+</button>
+
                 </div>
 
                 <div className="profile-actions">
@@ -56,7 +68,6 @@ export default function Profile() {
                 </div>
 
             </div>
-
         </section>
     );
 }

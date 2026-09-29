@@ -25,4 +25,22 @@ r.delete(
     asyncHandler(c.deleteCoupon)
 );
 
+r.get(
+    '/orders',
+    requireAuth,
+    requireRole('admin'),
+    asyncHandler(c.orders)
+);
+
+r.patch(
+    '/orders/:id/status',
+    requireAuth,
+    requireRole('admin'),
+    asyncHandler(c.updateOrderStatus)
+);
+
+r.delete(
+    '/orders/:id',
+    asyncHandler(c.deleteOrder)
+);
 export default r;

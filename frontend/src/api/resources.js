@@ -142,5 +142,14 @@ export const admin = {
         api.delete(`/products/${id}`),
 
     deleteCoupon: id =>
-    api.delete(`/admin/coupons/${id}`),
+        api.delete(`/admin/coupons/${id}`),
+
+    orders: () =>
+        api.get('/admin/orders'),
+
+    updateOrderStatus: (id, data) =>
+        api.patch(`/admin/orders/${id}/status`, data),
+
+    deleteOrder: id =>
+        api.delete(`/admin/orders/${id}`)
 };
