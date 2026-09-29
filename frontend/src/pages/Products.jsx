@@ -161,7 +161,7 @@ export default function Products() {
                             CATALOG
                         </span>
 
-                        <h1>Shop Provoxi</h1>
+                        <h1>Shop Prowoxi</h1>
                     </div>
 
                     
