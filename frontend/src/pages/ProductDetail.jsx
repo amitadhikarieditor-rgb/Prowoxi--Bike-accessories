@@ -6,7 +6,6 @@ import { useAuth } from '../contexts/AuthContext';
 import React from 'react';
 
 export default function ProductDetail() {
-
     const { id } = useParams();
     const nav = useNavigate();
 
@@ -15,21 +14,23 @@ export default function ProductDetail() {
 
     const [p, setP] = useState(null);
     const [rs, setRs] = useState([]);
-
     const [qty, setQty] = useState(1);
     const [body, setBody] = useState('');
     const [rating, setRating] = useState(5);
-
     const [currentImage, setCurrentImage] = useState(0);
 
-    useEffect(() => {
+    const [zoom, setZoom] = useState({
+        x: 0,
+        y: 0,
+        show: false
+    });
 
+    useEffect(() => {
         products.get(id)
             .then(r => setP(r.data.data));
 
         reviews.list(id)
             .then(r => setRs(r.data.data));
-
     }, [id]);
 
     if (!p) {
@@ -39,27 +40,18 @@ export default function ProductDetail() {
     const images = p.images || [];
 
     const nextImage = () => {
-
         setCurrentImage(prev =>
-            prev === images.length - 1
-                ? 0
-                : prev + 1
+            prev === images.length - 1 ? 0 : prev + 1
         );
-
     };
 
     const prevImage = () => {
-
         setCurrentImage(prev =>
-            prev === 0
-                ? images.length - 1
-                : prev - 1
+            prev === 0 ? images.length - 1 : prev - 1
         );
-
     };
 
     const addCart = async () => {
-
         if (!user) {
             return nav('/login');
         }
@@ -73,7 +65,6 @@ export default function ProductDetail() {
     };
 
     const review = async e => {
-
         e.preventDefault();
 
         if (!user) {
@@ -94,18 +85,11 @@ export default function ProductDetail() {
     };
 
     return (
-
         <section className="detail">
-
-            {/* =========================
-                PRODUCT IMAGE SLIDER
-            ========================== */}
 
             <div className="product-slider-card">
 
                 <div className="product-slider">
-
-                    {/* PREVIOUS */}
 
                     <button
                         className="slider-btn slider-prev"
@@ -115,22 +99,49 @@ export default function ProductDetail() {
                         ‹
                     </button>
 
-
-                    {/* IMAGE */}
-
                     {images.length > 0 && (
+                        <div
+                            className="image-magnifier"
+                            onMouseMove={e => {
+                                const rect = e.currentTarget.getBoundingClientRect();
 
-                        <img
-                            key={currentImage}
-                            className="detail-img"
-                            src={images[currentImage]}
-                            alt={`${p.name} ${currentImage + 1}`}
-                        />
+                                const x =
+                                    ((e.clientX - rect.left) / rect.width) * 100;
 
+                                const y =
+                                    ((e.clientY - rect.top) / rect.height) * 100;
+
+                                setZoom({
+                                    x,
+                                    y,
+                                    show: true
+                                });
+                            }}
+                            onMouseLeave={() =>
+                                setZoom(prev => ({
+                                    ...prev,
+                                    show: false
+                                }))
+                            }
+                        >
+                            <img
+                                key={currentImage}
+                                className="detail-img"
+                                src={images[currentImage]}
+                                alt={`${p.name} ${currentImage + 1}`}
+                            />
+
+                            {zoom.show && (
+                                <div
+                                    className="zoom-preview"
+                                    style={{
+                                        backgroundImage: `url(${images[currentImage]})`,
+                                        backgroundPosition: `${zoom.x}% ${zoom.y}%`
+                                    }}
+                                />
+                            )}
+                        </div>
                     )}
-
-
-                    {/* NEXT */}
 
                     <button
                         className="slider-btn slider-next"
@@ -142,17 +153,9 @@ export default function ProductDetail() {
 
                 </div>
 
-
-                {/* =========================
-                    SLIDER DOTS
-                ========================== */}
-
                 {images.length > 1 && (
-
                     <div className="slider-dots">
-
                         {images.map((_, index) => (
-
                             <button
                                 key={index}
                                 className={
@@ -164,19 +167,11 @@ export default function ProductDetail() {
                                     setCurrentImage(index)
                                 }
                             />
-
                         ))}
-
                     </div>
-
                 )}
 
             </div>
-
-
-            {/* =========================
-                PRODUCT INFORMATION
-            ========================== */}
 
             <div className="product-info">
 
@@ -184,30 +179,19 @@ export default function ProductDetail() {
                     {p.category?.name}
                 </span>
 
-                <h1>
-                    {p.name}
-                </h1>
+                <h1>{p.name}</h1>
 
                 <div className="price">
                     ₹{p.price.toLocaleString('en-IN')}
                 </div>
 
                 <p className="muted">
-
                     ★ {p.ratingAverage?.toFixed(1) || '0.0'}
-
                     {' · '}
-
                     {p.ratingCount || 0} reviews
-
                 </p>
 
-                <p>
-                    {p.description}
-                </p>
-
-
-                {/* BUY */}
+                <p>{p.description}</p>
 
                 <div className="buy-row">
 
@@ -226,31 +210,18 @@ export default function ProductDetail() {
                         disabled={!p.stock}
                         onClick={addCart}
                     >
-                        {p.stock
-                            ? 'Add to cart'
-                            : 'Out of stock'}
+                        {p.stock ? 'Add to cart' : 'Out of stock'}
                     </button>
 
                 </div>
 
             </div>
 
-
-            {/* =========================
-                REVIEWS
-            ========================== */}
-
             <div className="reviews">
 
-                <h2>
-                    Reviews
-                </h2>
-
-
-                {/* REVIEW FORM */}
+                <h2>Reviews</h2>
 
                 {user && (
-
                     <form
                         onSubmit={review}
                         className="form"
@@ -262,20 +233,15 @@ export default function ProductDetail() {
                                 setRating(e.target.value)
                             }
                         >
-
                             {[5, 4, 3, 2, 1].map(n => (
-
                                 <option
                                     key={n}
                                     value={n}
                                 >
                                     {n}
                                 </option>
-
                             ))}
-
                         </select>
-
 
                         <textarea
                             value={body}
@@ -286,20 +252,14 @@ export default function ProductDetail() {
                             placeholder="Share your experience"
                         />
 
-
                         <button className="btn">
                             Submit review
                         </button>
 
                     </form>
-
                 )}
 
-
-                {/* REVIEWS LIST */}
-
                 {rs.map(r => (
-
                     <article
                         className="review"
                         key={r._id}
@@ -313,26 +273,19 @@ export default function ProductDetail() {
                             {' '}★ {r.rating}
                         </span>
 
-                        <p>
-                            {r.body}
-                        </p>
+                        <p>{r.body}</p>
 
                         {r.verifiedPurchase && (
-
                             <small>
                                 Verified purchase
                             </small>
-
                         )}
 
                     </article>
-
                 ))}
 
             </div>
 
         </section>
-
     );
-
 }
