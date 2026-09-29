@@ -34,7 +34,7 @@ export default function Home() {
 
             <div className="hero-card">
                 <div className="hero-orb">P</div>
-                <h3>Prowoxi Accessories</h3>
+                <h3>Prowoxi Bike Accessories</h3>
                 <p>Curated goods. Simple decisions.</p>
             </div>
 

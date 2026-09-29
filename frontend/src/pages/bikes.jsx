@@ -13,7 +13,7 @@ export default function Bikes() {
         <section className="bikes-page">
             <div className="section-head">
                 <div>
-                    <span className="eyebrow">FIND YOUR BIKE</span>
+                    
                     <h1>Choose Your Bike</h1>
                     <p className="muted">
                         Find accessories made for your motorcycle.

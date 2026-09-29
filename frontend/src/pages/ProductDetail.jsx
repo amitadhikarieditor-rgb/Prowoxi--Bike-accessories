@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { products, reviews } from '../api/resources';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
+import ProductCard from '../components/ProductCard';
 import React from 'react';
 
 export default function ProductDetail() {
@@ -14,6 +15,7 @@ export default function ProductDetail() {
 
     const [p, setP] = useState(null);
     const [rs, setRs] = useState([]);
+    const [allProducts, setAllProducts] = useState([]);
     const [qty, setQty] = useState(1);
     const [body, setBody] = useState('');
     const [rating, setRating] = useState(5);
@@ -31,6 +33,12 @@ export default function ProductDetail() {
 
         reviews.list(id)
             .then(r => setRs(r.data.data));
+
+        products.list({
+            page: 1,
+            limit: 100
+        })
+            .then(r => setAllProducts(r.data.data));
     }, [id]);
 
     if (!p) {
@@ -227,21 +235,24 @@ export default function ProductDetail() {
                         className="form"
                     >
 
-                        <select
-                            value={rating}
-                            onChange={e =>
-                                setRating(e.target.value)
-                            }
-                        >
-                            {[5, 4, 3, 2, 1].map(n => (
-                                <option
-                                    key={n}
-                                    value={n}
+                        <div className="rating-input">
+                            {[1, 2, 3, 4, 5].map(star => (
+                                <button
+                                    type="button"
+                                    key={star}
+                                    className={
+                                        star <= rating
+                                            ? 'star active'
+                                            : 'star'
+                                    }
+                                    onClick={() =>
+                                        setRating(star)
+                                    }
                                 >
-                                    {n}
-                                </option>
+                                    ★
+                                </button>
                             ))}
-                        </select>
+                        </div>
 
                         <textarea
                             value={body}
@@ -283,6 +294,29 @@ export default function ProductDetail() {
 
                     </article>
                 ))}
+
+            </div>
+
+            <div className="related-products">
+
+                <div className="section-head">
+                    <div>
+                        <span className="eyebrow">
+                            EXPLORE
+                        </span>
+
+                        <h2>All Products</h2>
+                    </div>
+                </div>
+
+                <div className="grid">
+                    {allProducts.map(product => (
+                        <ProductCard
+                            key={product._id}
+                            product={product}
+                        />
+                    ))}
+                </div>
 
             </div>
 

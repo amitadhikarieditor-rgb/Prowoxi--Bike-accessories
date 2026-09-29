@@ -99,12 +99,15 @@ export async function deleteOrder(req, res) {
         throw new AppError('Order not found', 404);
     }
 
-    if (order.orderStatus !== 'DELIVERED') {
-        throw new AppError(
-            'Only delivered orders can be deleted',
-            400
-        );
-    }
+    if (
+    order.orderStatus !== 'DELIVERED' &&
+    order.orderStatus !== 'CANCELLED'
+) {
+    throw new AppError(
+        'Only delivered or cancelled orders can be deleted',
+        400
+    );
+}
 
     await order.deleteOne();
 

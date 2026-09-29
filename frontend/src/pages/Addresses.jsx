@@ -45,24 +45,86 @@ export default function Addresses() {
 
             <div className="checkout">
                 <form className="card form" onSubmit={add}>
-                    {Object.keys(f)
-                        .filter(k => k !== 'isDefault')
-                        .map(k => (
-                            <input
-                                key={k}
-                                required
-                                placeholder={k}
-                                value={f[k]}
-                                onChange={e =>
-                                    setF({
-                                        ...f,
-                                        [k]: e.target.value
-                                    })
-                                }
-                            />
-                        ))}
 
-                    <label>
+                    <input
+                        className="address-input"
+                        required
+                        placeholder="Full Name"
+                        value={f.fullName}
+                        onChange={e =>
+                            setF({
+                                ...f,
+                                fullName: e.target.value
+                            })
+                        }
+                    />
+
+                    <input
+                        className="address-input"
+                        required
+                        placeholder="Address"
+                        value={f.line1}
+                        onChange={e =>
+                            setF({
+                                ...f,
+                                line1: e.target.value
+                            })
+                        }
+                    />
+
+                    <input
+                        className="address-input"
+                        required
+                        placeholder="City"
+                        value={f.city}
+                        onChange={e =>
+                            setF({
+                                ...f,
+                                city: e.target.value
+                            })
+                        }
+                    />
+
+                    <input
+                        className="address-input"
+                        required
+                        placeholder="State"
+                        value={f.state}
+                        onChange={e =>
+                            setF({
+                                ...f,
+                                state: e.target.value
+                            })
+                        }
+                    />
+
+                    <input
+                        className="address-input"
+                        required
+                        placeholder="Postal Code"
+                        value={f.postalCode}
+                        onChange={e =>
+                            setF({
+                                ...f,
+                                postalCode: e.target.value
+                            })
+                        }
+                    />
+
+                    <input
+                        className="address-input"
+                        required
+                        placeholder="Phone Number"
+                        value={f.phone}
+                        onChange={e =>
+                            setF({
+                                ...f,
+                                phone: e.target.value
+                            })
+                        }
+                    />
+
+                    <label className="address-default">
                         <input
                             type="checkbox"
                             checked={f.isDefault}

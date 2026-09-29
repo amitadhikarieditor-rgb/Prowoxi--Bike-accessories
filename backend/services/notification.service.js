@@ -1,6 +1,7 @@
 import Notification from '../models/Notification.js';
 import { sendEmail } from './email.service.js';
 import User from '../models/User.js';
+import { paymentSuccessEmail } from './emailTemplate.js';
 
 export async function notify({
     userId,
@@ -42,17 +43,14 @@ export const orderPaid = (order) =>
         message: `Order ${order.orderNumber} has been paid.`,
         link: `/orders/${order._id}`,
         emailSubject: `Provoxi order ${order.orderNumber}`,
-        emailHtml: `
-            <h2>Payment received</h2>
-            <p>Your order ${order.orderNumber} is confirmed.</p>
-        `
+        emailHtml: paymentSuccessEmail(order)
     });
 
 export const orderStatusChanged = (order) =>
     notify({
         userId: order.user,
         type: 'ORDER_STATUS',
-        title: `Order ${order.orderStatus}`,
+        title: `Order ${order.orderNumber}`,
         message: `Order ${order.orderNumber} is now ${order.orderStatus}.`,
         link: `/orders/${order._id}`,
         emailSubject: `Order ${order.orderNumber} update`,

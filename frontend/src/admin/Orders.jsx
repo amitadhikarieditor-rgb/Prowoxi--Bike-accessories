@@ -27,7 +27,7 @@ export default function Orders() {
     };
 
     const deleteOrder = async id => {
-        if (!window.confirm('Delete this delivered order?')) {
+        if (!window.confirm('Delete this order?')) {
             return;
         }
 
@@ -63,6 +63,7 @@ export default function Orders() {
                         <tr>
                             <th>Order</th>
                             <th>User</th>
+                            <th>Address</th>
                             <th>Total</th>
                             <th>Status</th>
                             <th>Update</th>
@@ -79,6 +80,36 @@ export default function Orders() {
 
                                 <td>
                                     {o.user?.email || 'User'}
+                                </td>
+
+                                <td>
+                                    {o.addressSnapshot ? (
+                                        <>
+                                            {o.addressSnapshot.fullName}
+                                            <br />
+
+                                            {o.addressSnapshot.addressLine1}
+                                            <br />
+
+                                            {o.addressSnapshot.addressLine2 && (
+                                                <>
+                                                    {o.addressSnapshot.addressLine2}
+                                                    <br />
+                                                </>
+                                            )}
+
+                                            {o.addressSnapshot.city},{' '}
+                                            {o.addressSnapshot.state}
+                                            <br />
+
+                                            {o.addressSnapshot.pincode}
+                                            <br />
+
+                                            {o.addressSnapshot.phone}
+                                        </>
+                                    ) : (
+                                        'No address'
+                                    )}
                                 </td>
 
                                 <td>
@@ -119,7 +150,8 @@ export default function Orders() {
                                 </td>
 
                                 <td>
-                                    {o.orderStatus === 'DELIVERED' && (
+                                    {(o.orderStatus === 'DELIVERED' ||
+                                        o.orderStatus === 'CANCELLED') && (
                                         <button
                                             className="btn danger"
                                             onClick={() =>
