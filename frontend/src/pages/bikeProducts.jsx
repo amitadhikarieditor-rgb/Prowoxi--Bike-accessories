@@ -17,15 +17,28 @@ const bikes = [
         value: 'yamaha'
     },
     {
-        name: 'Honda',
-        value: 'honda'
+        name: 'pulsar',
+        value: 'pulsar'
     },
     {
         name: 'Bajaj',
         value: 'bajaj'
+    },
+    {
+        name: 'honda',
+        value: 'honda'
+    },{
+        name: 'hero',
+        value: 'hero'
+    },{
+        name: 'truimph',
+        value: 'truimph'
+    },
+    {
+        name: 'tvs',
+        value: 'tvs'
     }
-];
-
+]
 export default function BikeProducts() {
 
     const { bike } = useParams();

@@ -261,8 +261,8 @@
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.18);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.09);
     border-radius: 20px;
     overflow: auto;
 
@@ -966,7 +966,7 @@ td {
 
 .bike-card {
     margin-top: 100px;
-    min-width: 410px;
+    min-width: 200px;
     height: 650px;
     border-radius: 20px;
 
