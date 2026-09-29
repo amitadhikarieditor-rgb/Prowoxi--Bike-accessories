@@ -43,6 +43,7 @@
     background: rgba(102, 117, 118, 0.02);
     backdrop-filter: blur(7px);
     border-bottom: 1px solid #6d6b67;
+    border-top: 1px solid #6d6b67;
 }
 
 @media (max-width: 768px) {
@@ -1328,4 +1329,8 @@ td {
 .products-content {
     position: relative;
     z-index: 1;
+}
+
+section {
+    margin-top: 50px;
 }
