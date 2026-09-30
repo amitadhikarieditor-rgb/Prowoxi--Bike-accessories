@@ -1,16 +1,19 @@
+import React from 'react';
 import Header from './Header';
+import Footer from './Footer';
 
-import {Outlet} from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
-export default function Layout(){
-    return <>
-    
-    <Header/>
-    
-    <main className="container page">
-        <Outlet/>
-        
-        </main></>}
-        
-        
-        import React from "react";
+export default function Layout() {
+    return (
+        <>
+            <Header />
+
+            <main className="container page">
+                <Outlet />
+            </main>
+
+            <Footer />
+        </>
+    );
+}

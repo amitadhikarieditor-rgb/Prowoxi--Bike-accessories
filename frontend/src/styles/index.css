@@ -361,8 +361,8 @@ textarea {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 48px;
 }
 
 .product-card img {
@@ -1670,4 +1670,150 @@ section {
 
 .wishlist-btn.active {
     color: #e11d48;
+}
+
+.site-footer {
+    margin-top: 80px;
+    background: #0b0b0b;
+    color: #ffffff;
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.footer-top {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 70px 40px 60px;
+
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.4fr 1.2fr;
+    gap: 60px;
+}
+
+.footer-brand {
+    max-width: 360px;
+}
+
+.footer-logo {
+    display: inline-block;
+
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+
+    color: #ffffff;
+    text-decoration: none;
+
+    margin-bottom: 20px;
+}
+
+.footer-brand p {
+    margin: 0;
+
+    color: #9ca3af;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.footer-column h3 {
+    margin: 0 0 10px;
+
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+
+    color: #ffffff;
+}
+
+.footer-column a {
+    color: #9ca3af;
+    text-decoration: none;
+
+    font-size: 0.92rem;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.footer-column a:hover {
+    color: #ffffff;
+    transform: translateX(3px);
+}
+
+.footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+
+    padding: 22px 40px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.footer-bottom p {
+    margin: 0;
+
+    color: #6b7280;
+    font-size: 0.82rem;
+}
+
+.footer-bottom-links {
+    display: flex;
+    gap: 22px;
+}
+
+.footer-bottom-links a {
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 0.82rem;
+}
+
+.footer-bottom-links a:hover {
+    color: #ffffff;
+}
+
+
+@media (max-width: 900px) {
+
+    .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 45px;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+        max-width: 500px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .footer-top {
+        grid-template-columns: 1fr;
+        padding: 50px 25px 40px;
+        gap: 35px;
+    }
+
+    .footer-brand {
+        grid-column: auto;
+    }
+
+    .footer-bottom {
+        padding: 20px 25px;
+
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }

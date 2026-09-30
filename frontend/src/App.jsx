@@ -25,7 +25,7 @@ import Profile from "./pages/Profile.jsx";
 import bikes from "./pages/bikes.jsx";
 import BikeProducts from './pages/BikeProducts';
 import notFount from "./pages/notFound.jsx";
-
+import Footer from './components/Footer';
 export default function App(){
     return <BrowserRouter>
     <Routes>

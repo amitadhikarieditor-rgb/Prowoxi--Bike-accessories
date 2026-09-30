@@ -89,7 +89,6 @@ export default function Addresses() {
                             })
                         }
                     />
-
                     <input
                         className="address-input"
                         required
