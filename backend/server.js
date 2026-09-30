@@ -59,6 +59,7 @@ app.use('/api/webhooks',express.raw({type:'application/json'}),(req,res,next)=>{
     
     app.use(notFound);app.use(errorHandler);
     await connectDB();
+    await connectRedis();
 
 app.listen(env.port,()=>console.log(`Provoxi API running on http://localhost:${env.port}`));
 
