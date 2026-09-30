@@ -1434,6 +1434,7 @@ section {
     width: 46px;
     height: 46px;
     display: flex;
+    margin-top:80px;
     align-items: center;
     justify-content: center;
     padding: 0;
@@ -1477,8 +1478,8 @@ section {
     width: fit-content;
     margin: 15px auto 4px;
     padding: 7px 11px;
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    /* background: rgba(0, 0, 0, 0.25); */
+    /* border: 1px solid rgba(255, 255, 255, 0.25); */
     border-radius: 999px;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
