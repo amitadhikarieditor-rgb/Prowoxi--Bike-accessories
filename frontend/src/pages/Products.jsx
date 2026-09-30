@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import React from 'react';
-import { products } from '../api/resources';
+import { products, wishlist } from '../api/resources';
 import ProductCard from '../components/ProductCard';
 import { Link } from 'react-router-dom';
 
@@ -13,8 +13,7 @@ import tvsVideo from '../styles/tvsVideo.mp4';
 import heroVideo from '../styles/heroVideo.mp4';
 import hondaVideo from '../styles/hondaVideo.mp4';
 import truimphVideo from '../styles/truimphVideo.mp4';
-import bgvideo from '../styles/mixkit-soft-and-traslucent-smoke-flows-up-on-a-dark-background-50956-full-hd.mp4'
-
+import bgvideo from '../styles/mixkit-soft-and-traslucent-smoke-flows-up-on-a-dark-background-50956-full-hd.mp4';
 
 const bikes = [
     {
@@ -61,8 +60,7 @@ const bikes = [
         name: 'tvs',
         slug: 'tvs',
         video: tvsVideo
-    },
-
+    }
 ];
 
 export default function Products() {
@@ -75,6 +73,7 @@ export default function Products() {
     const [q, setQ] = useState('');
     const [sort, setSort] = useState('newest');
     const [loading, setLoading] = useState(true);
+    const [wishlistItems, setWishlistItems] = useState([]);
 
     const load = () => {
         setLoading(true);
@@ -90,12 +89,30 @@ export default function Products() {
             .finally(() => setLoading(false));
     };
 
+    const loadWishlist = () => {
+        wishlist
+            .get()
+            .then(r => {
+                setWishlistItems(r.data.data.products || []);
+            })
+            .catch(() => {
+                setWishlistItems([]);
+            });
+    };
+
+    const handleWishlist = async id => {
+        await wishlist.toggle(id);
+        loadWishlist();
+    };
+
     useEffect(() => {
         load();
+        loadWishlist();
     }, [sort]);
 
     return (
         <section className="products-page">
+
             <div className="products-bg-video">
                 <video
                     autoPlay
@@ -110,10 +127,8 @@ export default function Products() {
                 </video>
             </div>
 
-         
             <div className="products-content">
 
-                
                 <div className="bike-selector">
 
                     <span className="eyebrow choose-text">
@@ -128,7 +143,6 @@ export default function Products() {
                                 to={`/bikes/${bike.slug}`}
                                 className="bike-card"
                             >
-
                                 <video
                                     className="bike-video"
                                     autoPlay
@@ -153,7 +167,6 @@ export default function Products() {
                     </div>
                 </div>
 
-               
                 <div className="section-head">
 
                     <div>
@@ -164,7 +177,6 @@ export default function Products() {
                         <h1>Shop Prowoxi</h1>
                     </div>
 
-                    
                     <div className="filters">
 
                         <input
@@ -213,6 +225,10 @@ export default function Products() {
                             <ProductCard
                                 key={product._id}
                                 product={product}
+                                isWishlisted={wishlistItems.some(
+                                    item => item._id === product._id
+                                )}
+                                onWishlist={handleWishlist}
                             />
                         ))}
 

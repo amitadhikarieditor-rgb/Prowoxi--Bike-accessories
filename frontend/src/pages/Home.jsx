@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import video from '../styles/285224_medium.mp4';
 
 export default function Home() {
+
+    useEffect(() => {
+        document.title = 'PROVOXI - Bike Accessories';
+    }, []);
+
     return (
         <section className="hero">
 
             <video
-    className="hero-video"
-    autoPlay
-    muted
-    loop
-    playsInline
->
-    <source src={video} type="video/mp4" />
-</video>
+                className="hero-video"
+                autoPlay
+                muted
+                loop
+                playsInline
+            >
+                <source src={video} type="video/mp4" />
+            </video>
 
             <div className="hero-content">
                 <span className="eyebrow">Just make it happen</span>

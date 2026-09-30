@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { addresses } from '../api/resources';
 
 export default function Addresses() {
+
+    useEffect(() => {
+        document.title = 'PROVOXI - Addresses';
+    }, []);
+
     const [d, setD] = useState([]);
     const [f, setF] = useState({
         fullName: '',

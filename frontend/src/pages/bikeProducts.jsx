@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { products } from '../api/resources';
 import ProductCard from '../components/ProductCard';
 
+
 const bikes = [
     {
         name: 'Royal Enfield',
@@ -27,10 +28,12 @@ const bikes = [
     {
         name: 'honda',
         value: 'honda'
-    },{
+    },
+    {
         name: 'hero',
         value: 'hero'
-    },{
+    },
+    {
         name: 'truimph',
         value: 'truimph'
     },
@@ -38,7 +41,8 @@ const bikes = [
         name: 'tvs',
         value: 'tvs'
     }
-]
+];
+
 export default function BikeProducts() {
 
     const { bike } = useParams();
@@ -51,7 +55,10 @@ export default function BikeProducts() {
     );
 
     useEffect(() => {
+        document.title = "PROVOXI"- `${currentBike?.name || 'Bike'} Accessories`;
+    }, [currentBike]);
 
+    useEffect(() => {
         setLoading(true);
 
         products.list({
@@ -72,6 +79,7 @@ export default function BikeProducts() {
         return (
             <section>
                 <h1>Bike not found</h1>
+
                 <Link to="/products">
                     Back to Products
                 </Link>
@@ -108,7 +116,6 @@ export default function BikeProducts() {
                 </Link>
 
             </div>
-
 
             {loading ? (
 

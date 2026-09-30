@@ -55,9 +55,6 @@ export default function Products() {
     });
 
 
-    // =========================
-    // LOAD PRODUCTS
-    // =========================
 
     const load = () => {
 
@@ -67,9 +64,7 @@ export default function Products() {
     };
 
 
-    // =========================
-    // LOAD CATEGORIES
-    // =========================
+
 
     const loadCategories = () => {
 
@@ -87,9 +82,7 @@ export default function Products() {
     }, []);
 
 
-    // =========================
-    // HANDLE INPUT
-    // =========================
+
 
     const handleChange = e => {
 
@@ -110,9 +103,6 @@ export default function Products() {
     };
 
 
-    // =========================
-    // IMAGE CHANGE
-    // =========================
 
     const handleImageChange = e => {
 
@@ -122,11 +112,6 @@ export default function Products() {
         }));
 
     };
-
-
-    // =========================
-    // RESET FORM
-    // =========================
 
     const resetForm = () => {
 
@@ -147,11 +132,6 @@ export default function Products() {
         setEditingId(null);
 
     };
-
-
-    // =========================
-    // EDIT PRODUCT
-    // =========================
 
     const editProduct = product => {
 
@@ -201,10 +181,6 @@ export default function Products() {
     };
 
 
-    // =========================
-    // SUBMIT
-    // =========================
-
     const handleSubmit = async e => {
 
         e.preventDefault();
@@ -221,10 +197,6 @@ export default function Products() {
             const formData = new FormData();
 
 
-            // =========================
-            // SLUG
-            // =========================
-
             const slug = form.name
                 .toLowerCase()
                 .trim()
@@ -232,9 +204,7 @@ export default function Products() {
                 .replace(/^-|-$/g, '');
 
 
-            // =========================
-            // BASIC DATA
-            // =========================
+
 
             formData.append(
                 'name',
@@ -276,11 +246,6 @@ export default function Products() {
                 form.featured
             );
 
-
-            // =========================
-            // COMPARE PRICE
-            // =========================
-
             if (form.compareAtPrice !== '') {
 
                 formData.append(
@@ -291,9 +256,7 @@ export default function Products() {
             }
 
 
-            // =========================
-            // IMAGES
-            // =========================
+            
 
             form.images.forEach(image => {
 
@@ -305,10 +268,7 @@ export default function Products() {
             });
 
 
-            // =========================
-            // TAGS
-            // =========================
-
+        
             if (form.tags) {
 
                 form.tags
@@ -327,9 +287,7 @@ export default function Products() {
             }
 
 
-            // =========================
-            // UPDATE
-            // =========================
+            
 
             if (editingId) {
 
@@ -344,11 +302,6 @@ export default function Products() {
 
             }
 
-
-            // =========================
-            // CREATE
-            // =========================
-
             else {
 
                 await admin.createProduct(
@@ -360,11 +313,6 @@ export default function Products() {
                 );
 
             }
-
-
-            // =========================
-            // RESET
-            // =========================
 
             resetForm();
 
@@ -395,11 +343,6 @@ export default function Products() {
 
     };
 
-
-    // =========================
-    // ARCHIVE
-    // =========================
-
     const archiveProduct = async id => {
 
         await admin.deleteProduct(id);
@@ -408,10 +351,6 @@ export default function Products() {
 
     };
 
-
-    // =========================
-    // CANCEL
-    // =========================
 
     const cancelForm = () => {
 
@@ -429,11 +368,6 @@ export default function Products() {
     return (
 
         <section className="admin-products">
-
-
-            {/* =========================
-                HEADER
-            ========================= */}
 
             <div className="section-head">
 
@@ -483,9 +417,6 @@ export default function Products() {
 
 
 
-            {/* =========================
-                PRODUCT FORM
-            ========================= */}
 
             {showForm && (
 
@@ -534,7 +465,7 @@ export default function Products() {
                         <div className="form-grid">
 
 
-                            {/* PRODUCT NAME */}
+               
 
                             <div className="form-group full">
 
@@ -554,7 +485,6 @@ export default function Products() {
 
 
 
-                            {/* BIKE */}
 
                             <div className="form-group">
 
@@ -593,7 +523,7 @@ export default function Products() {
 
 
 
-                            {/* CATEGORY */}
+            
 
                             <div className="form-group">
 
@@ -632,7 +562,7 @@ export default function Products() {
 
 
 
-                            {/* STOCK */}
+                    
 
                             <div className="form-group">
 
@@ -654,7 +584,6 @@ export default function Products() {
 
 
 
-                            {/* PRICE */}
 
                             <div className="form-group">
 
@@ -676,8 +605,7 @@ export default function Products() {
 
 
 
-                            {/* COMPARE PRICE */}
-
+                           
                             <div className="form-group">
 
                                 <label>
@@ -697,7 +625,7 @@ export default function Products() {
 
 
 
-                            {/* DESCRIPTION */}
+             
 
                             <div className="form-group full">
 
@@ -718,7 +646,7 @@ export default function Products() {
 
 
 
-                            {/* IMAGES */}
+              
 
                             <div className="form-group full">
 
@@ -750,7 +678,7 @@ export default function Products() {
                                 </div>
 
 
-                                {/* NEW IMAGE PREVIEW */}
+                               
 
                                 {form.images.length > 0 && (
 
@@ -782,7 +710,7 @@ export default function Products() {
 
 
 
-                            {/* TAGS */}
+                         
 
                             <div className="form-group full">
 
@@ -805,7 +733,7 @@ export default function Products() {
 
 
 
-                            {/* FEATURED */}
+                           
 
                             <label className="featured-toggle">
 
@@ -833,10 +761,6 @@ export default function Products() {
 
                         </div>
 
-
-
-                        {/* SUCCESS */}
-
                         {message && (
 
                             <div className="form-success">
@@ -847,8 +771,7 @@ export default function Products() {
 
 
 
-                        {/* ERROR */}
-
+        
                         {error && (
 
                             <div className="form-error">
@@ -859,7 +782,7 @@ export default function Products() {
 
 
 
-                        {/* ACTIONS */}
+    
 
                         <div className="form-actions">
 
@@ -896,11 +819,6 @@ export default function Products() {
 
             )}
 
-
-
-            {/* =========================
-                PRODUCT TABLE
-            ========================= */}
 
             <div className="table-wrap">
 
@@ -999,7 +917,7 @@ export default function Products() {
                                 </td>
 
 
-                                {/* ACTIONS */}
+                          
 
                                 <td>
 

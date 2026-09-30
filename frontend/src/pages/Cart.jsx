@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 
 export default function Cart() {
+
+    useEffect(() => {
+        document.title = 'Cart - PROVOXI';
+    }, []);
+
     const { cart, remove } = useCart();
     const nav = useNavigate();
 
@@ -35,6 +40,7 @@ export default function Cart() {
                     <div className="list">
                         {cart.items.map(i => (
                             <div className="cart-row" key={i.product._id}>
+
                                 <img
                                     src={i.product.images?.[0]}
                                     alt=""
@@ -46,20 +52,28 @@ export default function Cart() {
                                 </div>
 
                                 <strong>
-                                    ₹{(i.product.price * i.quantity).toLocaleString('en-IN')}
+                                    ₹{(
+                                        i.product.price * i.quantity
+                                    ).toLocaleString('en-IN')}
                                 </strong>
 
                                 <button
                                     className="link-btn"
-                                    onClick={() => remove(i.product._id)}
+                                    onClick={() =>
+                                        remove(i.product._id)
+                                    }
                                 >
                                     Remove
                                 </button>
+
                             </div>
                         ))}
                     </div>
 
-                    <button className="btn" onClick={() => nav('/checkout')}>
+                    <button
+                        className="btn"
+                        onClick={() => nav('/checkout')}
+                    >
                         Checkout
                     </button>
                 </>
