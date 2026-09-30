@@ -8,9 +8,9 @@ import { makeHash } from '../services/token.service.js';
 await connectDB();
 
 await Promise.all([
-    User.deleteMany({}),
     Category.deleteMany({}),
-    Product.deleteMany({})
+    Product.deleteMany({}),
+    User.deleteMany({})
 ]);
 
 const admin = await User.create({
@@ -22,111 +22,133 @@ const admin = await User.create({
 });
 
 const cats = await Category.insertMany([
-    { name: 'Helmets', slug: 'helmets' },
-    { name: 'Lighting', slug: 'lighting' },
-    { name: 'Mobile Holders', slug: 'mobile-holders' },
-    { name: 'Protection', slug: 'protection' },
-    { name: 'Luggage', slug: 'luggage' },
-    { name: 'Riding Gear', slug: 'riding-gear' },
-    { name: 'Bike Covers', slug: 'bike-covers' },
-    { name: 'Performance', slug: 'performance' }
+    {
+        name: 'Crash Guard',
+        slug: 'crash-guard'
+    },
+    {
+        name: 'Radiator Guard',
+        slug: 'radiator-guard'
+    },
+    {
+        name: 'Foot Rest',
+        slug: 'foot-rest'
+    }
 ]);
 
 const data = [
 
     [
-        'Provoxi Full Face Helmet',
-        'provoxi-full-face-helmet',
+        'Provoxi Crash Guard',
+        'provoxi-crash-guard',
+        'royal-enfield',
+        0,
+        2299,
+        20
+    ],
+
+    [
+        'Heavy Duty Crash Guard',
+        'heavy-duty-crash-guard',
+        'royal-enfield',
         0,
         2499,
-        25,
-        ['Royal Enfield Classic 350', 'Royal Enfield Hunter 350', 'Bajaj Pulsar 150']
+        15
     ],
 
     [
-        'LED Headlight',
-        'led-headlight',
+        'Black Steel Crash Guard',
+        'black-steel-crash-guard',
+        'honda',
+        0,
+        1999,
+        25
+    ],
+
+    [
+        'Provoxi Radiator Guard',
+        'provoxi-radiator-guard',
+        'royal-enfield',
         1,
         1899,
-        30,
-        ['Royal Enfield Classic 350', 'Royal Enfield Hunter 350', 'Honda CB350']
+        30
     ],
 
     [
-        'Universal Mobile Holder',
-        'universal-mobile-holder',
-        2,
-        799,
-        50,
-        ['Royal Enfield Classic 350', 'Royal Enfield Hunter 350', 'Bajaj Pulsar 150', 'Honda CB350']
-    ],
-
-    [
-        'Crash Guard',
-        'crash-guard',
-        3,
-        2299,
-        20,
-        ['Royal Enfield Classic 350', 'Royal Enfield Hunter 350']
-    ],
-
-    [
-        'Saddle Stay Bag',
-        'saddle-stay-bag',
-        4,
+        'Stainless Steel Radiator Guard',
+        'stainless-steel-radiator-guard',
+        'honda',
+        1,
         1599,
-        35,
-        ['Royal Enfield Classic 350', 'Royal Enfield Hunter 350', 'Honda CB350']
+        25
     ],
 
     [
-        'Premium Riding Gloves',
-        'premium-riding-gloves',
-        5,
+        'Black Mesh Radiator Guard',
+        'black-mesh-radiator-guard',
+        'bajaj',
+        1,
+        1799,
+        20
+    ],
+
+    [
+        'Provoxi Foot Rest',
+        'provoxi-foot-rest',
+        'royal-enfield',
+        2,
         999,
-        45,
-        ['Royal Enfield Classic 350', 'Royal Enfield Hunter 350', 'Bajaj Pulsar 150']
+        40
     ],
 
     [
-        'Waterproof Bike Cover',
-        'waterproof-bike-cover',
-        6,
-        699,
-        60,
-        ['Royal Enfield Classic 350', 'Royal Enfield Hunter 350', 'Bajaj Pulsar 150', 'Honda CB350']
-    ],
-
-    [
-        'Performance Air Filter',
-        'performance-air-filter',
-        7,
+        'Aluminium Foot Rest',
+        'aluminium-foot-rest',
+        'bajaj',
+        2,
         1299,
-        25,
-        ['Royal Enfield Classic 350', 'Bajaj Pulsar 150']
+        35
     ]
 
 ];
 
 await Product.insertMany(
-    data.map(([name, slug, c, price, stock, compatibleBikes]) => ({
-        name,
-        slug,
-        category: cats[c]._id,
-        description: `Premium ${name} designed for motorcycle enthusiasts.`,
-        images: [
-            'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=80'
-        ],
-        price,
-        stock,
-        tags: [
-            name.toLowerCase(),
-            'bike accessories',
-            'motorcycle'
-        ],
-        compatibleBikes,
-        featured: Math.random() > 0.5
-    }))
+    data.map(
+        ([
+            name,
+            slug,
+            bike,
+            categoryIndex,
+            price,
+            stock
+        ]) => ({
+            name,
+            slug,
+            bike,
+
+            category:
+                cats[categoryIndex]._id,
+
+            description:
+                `Premium ${name} designed for motorcycle enthusiasts.`,
+
+            images: [
+                'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=80'
+            ],
+
+            price,
+            stock,
+
+            tags: [
+                name.toLowerCase(),
+                'bike accessories',
+                'motorcycle'
+            ],
+
+            featured:
+                Math.random() > 0.5
+        })
+    )
 );
 
 console.log(`Seeded admin ${admin.email}`);

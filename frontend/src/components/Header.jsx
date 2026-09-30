@@ -47,7 +47,7 @@ export default function Header() {
         <>
             <header className="header">
                  <Link className="brand" to="/">
-    <img src="/image.svg" alt="PROVOXI" />
+    PROWOXI
 </Link>
 
                 <nav>
