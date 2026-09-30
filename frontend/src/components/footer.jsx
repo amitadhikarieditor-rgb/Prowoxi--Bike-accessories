@@ -7,7 +7,7 @@ export default function Footer() {
 
             <div className="footer-top">
 
-                {/* Brand */}
+
                 <div className="footer-brand">
                     <Link to="/" className="footer-logo">
                         PROWOXI
@@ -19,7 +19,8 @@ export default function Footer() {
                     </p>
                 </div>
 
-                {/* Company */}
+
+          
                 <div className="footer-column">
                     <h3>Company</h3>
 
@@ -28,7 +29,8 @@ export default function Footer() {
                     </Link>
                 </div>
 
-                {/* Customer Policies */}
+
+           
                 <div className="footer-column">
                     <h3>Customer Care</h3>
 
@@ -41,7 +43,8 @@ export default function Footer() {
                     </Link>
                 </div>
 
-                {/* Legal */}
+
+
                 <div className="footer-column">
                     <h3>Legal</h3>
 
@@ -54,7 +57,30 @@ export default function Footer() {
                     </Link>
                 </div>
 
+
+      
+                <div className="footer-column">
+                    <h3>Contact</h3>
+
+                    <a
+                        href="https://wa.me/917048959793"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        WhatsApp
+                    </a>
+
+                    <a href="tel:+917048959793">
+                        +91 70489 59793
+                    </a>
+
+                    <a href="mailto:support@provoxi.com">
+                        support@provoxi.com
+                    </a>
+                </div>
+
             </div>
+
 
             <div className="footer-bottom">
 

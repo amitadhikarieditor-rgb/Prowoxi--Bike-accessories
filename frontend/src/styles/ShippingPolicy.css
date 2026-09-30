@@ -1,0 +1,266 @@
+.shipping-page {
+    background: #fff;
+    color: #111827;
+}
+
+.shipping-container {
+    width: min(1200px, 90%);
+    margin: 0 auto;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.shipping-hero {
+    padding: 100px 0 110px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.shipping-eyebrow {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: #6b7280;
+    margin-bottom: 22px;
+}
+
+.shipping-hero h1 {
+    margin: 0;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+}
+
+.shipping-hero p {
+    max-width: 600px;
+    margin-top: 35px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #6b7280;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.shipping-content {
+    padding: 100px 0;
+}
+
+.shipping-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 100px;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.shipping-sidebar {
+    position: sticky;
+    top: 40px;
+    align-self: start;
+}
+
+.shipping-sidebar span {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #9ca3af;
+    margin-bottom: 25px;
+}
+
+.shipping-sidebar a {
+    display: block;
+    padding: 9px 0;
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: color 0.2s ease;
+}
+
+.shipping-sidebar a:hover {
+    color: #111827;
+}
+
+
+/* =========================
+   DETAILS
+========================= */
+
+.shipping-details {
+    max-width: 760px;
+}
+
+.shipping-details section {
+    padding-bottom: 70px;
+    margin-bottom: 70px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.shipping-number {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #9ca3af;
+    margin-bottom: 20px;
+}
+
+.shipping-details h2 {
+    margin: 0 0 25px;
+    font-size: 2.2rem;
+    letter-spacing: -0.035em;
+}
+
+.shipping-details p {
+    margin: 0 0 20px;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #6b7280;
+}
+
+
+/* =========================
+   NOTE
+========================= */
+
+.shipping-note {
+    padding: 30px;
+    border: 1px solid #d1d5db;
+    border-radius: 14px;
+    background: #f9fafb;
+}
+
+.shipping-note strong {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.shipping-note p {
+    margin: 0;
+}
+
+
+/* =========================
+   BOTTOM
+========================= */
+
+.shipping-footer {
+    padding: 100px 0;
+    background: #111827;
+    color: #fff;
+}
+
+.shipping-footer .shipping-eyebrow {
+    color: #9ca3af;
+}
+
+.shipping-footer h2 {
+    margin: 0;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+}
+
+.shipping-footer p {
+    max-width: 600px;
+    margin-top: 30px;
+    color: #9ca3af;
+    line-height: 1.8;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .shipping-hero {
+        padding: 75px 0 80px;
+    }
+
+    .shipping-content {
+        padding: 70px 0;
+    }
+
+    .shipping-layout {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .shipping-sidebar {
+        position: static;
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 25px;
+    }
+
+    .shipping-sidebar a {
+        display: inline-block;
+        margin-right: 20px;
+    }
+
+    .shipping-details section {
+        padding-bottom: 50px;
+        margin-bottom: 50px;
+    }
+
+    .shipping-details h2 {
+        font-size: 1.8rem;
+    }
+
+    .shipping-footer {
+        padding: 75px 0;
+    }
+}
+.shipping-contact {
+    margin-top: 35px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.shipping-contact a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 22px;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    color: #fff;
+    background: transparent;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.shipping-contact a:hover {
+    background: #fff;
+    color: #111827;
+    border-color: #fff;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+
+    .shipping-contact {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .shipping-contact a {
+        width: 100%;
+        justify-content: flex-start;
+        box-sizing: border-box;
+    }
+
+}

@@ -1817,3 +1817,215 @@ section {
         align-items: flex-start;
     }
 }
+
+
+.about-page {
+    background: #fff;
+    color: #111827;
+}
+
+.about-container {
+    width: min(1200px, 90%);
+    margin: 0 auto;
+}
+
+/* Hero */
+
+.about-hero {
+    padding: 110px 0 120px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.about-eyebrow,
+.about-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+.about-hero h1 {
+    max-width: 850px;
+    margin: 0;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.055em;
+    font-weight: 700;
+}
+
+.about-hero p {
+    max-width: 650px;
+    margin-top: 35px;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #6b7280;
+}
+
+/* General Sections */
+
+.about-section {
+    padding: 100px 0;
+}
+
+.about-light {
+    background: #f7f7f7;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 100px;
+}
+
+.about-section h2 {
+    margin: 0;
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.045em;
+}
+
+.about-content {
+    max-width: 650px;
+}
+
+.about-content p {
+    margin: 0 0 24px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #6b7280;
+}
+
+/* Section Heading */
+
+.section-heading {
+    max-width: 700px;
+    margin-bottom: 60px;
+}
+
+.section-heading p {
+    margin-top: 25px;
+    color: #6b7280;
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+/* Cards */
+
+.about-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.about-card {
+    background: #fff;
+    padding: 40px;
+    min-height: 280px;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+}
+
+.about-number {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #9ca3af;
+    margin-bottom: 55px;
+}
+
+.about-card h3 {
+    margin: 0 0 15px;
+    font-size: 1.35rem;
+}
+
+.about-card p {
+    margin: 0;
+    color: #6b7280;
+    line-height: 1.7;
+}
+
+/* Categories */
+
+.about-category-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 100px;
+    align-items: start;
+}
+
+.category-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid #d1d5db;
+}
+
+.category-list span {
+    padding: 22px 10px;
+    border-bottom: 1px solid #d1d5db;
+    font-weight: 600;
+}
+
+/* Final */
+
+.about-final {
+    background: #111827;
+    color: #fff;
+    padding: 110px 0;
+}
+
+.about-final .about-eyebrow {
+    color: #9ca3af;
+}
+
+.about-final h2 {
+    margin: 0;
+    font-size: clamp(2.8rem, 6vw, 6rem);
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+}
+
+.about-final p {
+    max-width: 650px;
+    margin-top: 35px;
+    color: #9ca3af;
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    .about-hero {
+        padding: 80px 0;
+    }
+
+    .about-section {
+        padding: 70px 0;
+    }
+
+    .about-grid,
+    .about-category-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+    }
+
+    .about-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .category-list {
+        grid-template-columns: 1fr;
+    }
+
+    .about-card {
+        min-height: auto;
+    }
+
+    .about-number {
+        margin-bottom: 35px;
+    }
+}
+
+
