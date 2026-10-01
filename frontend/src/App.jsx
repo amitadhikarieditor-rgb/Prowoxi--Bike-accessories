@@ -25,7 +25,6 @@ import ShippingPolicy from "./pages/ShippingPolicy.jsx";
 import Privacy from './pages/Privacy.jsx';
 import Terms from './pages/Terms.jsx';
 
-
 import Bikes from "./pages/bikes.jsx";
 import BikeProducts from "./pages/BikeProducts";
 import NotFound from "./pages/notFound.jsx";
