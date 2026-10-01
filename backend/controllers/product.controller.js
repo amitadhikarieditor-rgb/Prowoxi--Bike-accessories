@@ -10,27 +10,85 @@ export async function list(req,res){
     ;const cached=await cache.get(key);
     if(cached)return res.json(cached);
 
-    const filter={isActive:true};
+   const filter = { isActive: true };
 
-    if (req.query.bike)
+if (req.query.bike)
     filter.bike = req.query.bike;
 
-    if(req.query.category)
-        filter.category=req.query.category;
-    if(req.query.minPrice)
-        filter.price={
-    $gte:Number(req.query.minPrice)};
-    if(req.query.maxPrice)filter.price={...(filter.price||{}),
-    $lte:Number(req.query.maxPrice)};if(req.query.featured==='true')
-        filter.featured=true;if(req.query.q)filter.$text={$search:req.query.q};
-    let sort={createdAt:-1};
-    if(req.query.sort==='price_asc')sort={price:1};
-    if(req.query.sort==='price_desc')sort={price:-1};
-    if(req.query.sort==='rating')sort={ratingAverage:-1};
-    const [data,total]=await Promise.all([Product.find(filter).populate('category','name slug').sort(sort).skip(skip).limit(limit).lean(),
-        Product.countDocuments(filter)]);
-        const payload={success:true,data,pagination:{page,limit,total,totalPages:Math.ceil(total/limit)}};
-        await cache.set(key,payload,45);res.json(payload);}
+if (req.query.category)
+    filter.category = req.query.category;
+
+if (req.query.minPrice)
+    filter.price = {
+        $gte: Number(req.query.minPrice)
+    };
+
+if (req.query.maxPrice)
+    filter.price = {
+        ...(filter.price || {}),
+        $lte: Number(req.query.maxPrice)
+    };
+
+if (req.query.featured === 'true')
+    filter.featured = true;
+
+// Case-insensitive + partial search
+if (req.query.q) {
+    const search = req.query.q.trim();
+
+    filter.$or = [
+        {
+            name: {
+                $regex: search,
+                $options: 'i'
+            }
+        },
+        {
+            description: {
+                $regex: search,
+                $options: 'i'
+            }
+        }
+    ];
+}
+
+let sort = { createdAt: -1 };
+
+if (req.query.sort === 'price_asc')
+    sort = { price: 1 };
+
+if (req.query.sort === 'price_desc')
+    sort = { price: -1 };
+
+if (req.query.sort === 'rating')
+    sort = { ratingAverage: -1 };
+
+const [data, total] = await Promise.all([
+    Product.find(filter)
+        .populate('category', 'name slug')
+        .sort(sort)
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+
+    Product.countDocuments(filter)
+]);
+
+const payload = {
+    success: true,
+    data,
+    pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit)
+    }
+};
+
+await cache.set(key, payload, 45);
+
+res.json(payload);
+}
 
 export async function getOne(req,res){
     const p=await Product.findOne({_id:req.params.id,isActive:true}).populate('category');

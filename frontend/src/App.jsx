@@ -22,6 +22,8 @@ import Profile from "./pages/Profile.jsx";
 import ReturnRefundPolicy from "./pages/ReturnRefundPolicy";
 import About from "./pages/About";
 import ShippingPolicy from "./pages/ShippingPolicy.jsx";
+import Privacy from './pages/Privacy.jsx';
+import Terms from './pages/Terms.jsx';
 
 
 import Bikes from "./pages/bikes.jsx";
@@ -53,11 +55,18 @@ export default function App() {
     path="/return-refund-policy"
     element={<ReturnRefundPolicy />}
 />
-{/*
+
+<Route
+    path="/Privacy-Policy"
+    element={<Privacy />}
+/>
+
+
+
 <Route
     path="/terms"
     element={<Terms />}
-/> */}
+/>
 
           
                 <Route element={<Layout />}>
