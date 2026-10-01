@@ -61,10 +61,12 @@ export const reviews = {
     create: (id, data) =>
         api.post(`/reviews/product/${id}`, data),
 
+    update: (id, data) =>
+        api.patch(`/reviews/${id}`, data),
+
     remove: id =>
         api.delete(`/reviews/${id}`)
 };
-
 
 
 export const addresses = {

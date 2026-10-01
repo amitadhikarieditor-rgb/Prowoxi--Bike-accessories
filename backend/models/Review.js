@@ -6,14 +6,18 @@ const s=new mongoose.Schema({
         ref:'Product',
         index:true
     },
-        user:
-        {type:mongoose.Schema.Types.ObjectId,
-            ref:'User'},
-            rating:{
+        user:{
+
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'User'
+        },
+        rating:{
                 type:Number,min:1,max:5,required:true
             },
-            title:
-            String,body:String,images:[String],
+            title:String,
+            body:String,
+            images:[String],
+            
             verifiedPurchase:{
                 type:Boolean,default:false
             },

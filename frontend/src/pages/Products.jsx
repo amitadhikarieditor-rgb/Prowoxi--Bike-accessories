@@ -5,7 +5,7 @@ import ProductCard from '../components/ProductCard';
 import { Link } from 'react-router-dom';
 
 import royalEnfieldVideo from '../styles/13760090_1080_1920_30fps.mp4';
-import ktmVideo from '../styles/14921010-uhd_1440_1920_30fps.mp4';
+import ktmVideo from '../styles/hondaVideo.mp4';
 import yamahaVideo from '../styles/12191614_2160_3840_30fps.mp4';
 import pulsarVideo from '../styles/12303678_2160_3840_30fps.mp4';
 import bajajVideo from '../styles/12009618_2160_3840_30fps.mp4';
@@ -13,7 +13,7 @@ import tvsVideo from '../styles/tvsVideo.mp4';
 import heroVideo from '../styles/heroVideo.mp4';
 import hondaVideo from '../styles/hondaVideo.mp4';
 import truimphVideo from '../styles/truimphVideo.mp4';
-import bgvideo from '../styles/mixkit-soft-and-traslucent-smoke-flows-up-on-a-dark-background-50956-full-hd.mp4';
+// import bgvideo from '../styles/mixkit-soft-and-traslucent-smoke-flows-up-on-a-dark-background-50956-full-hd.mp4';
 
 const bikes = [
     {
@@ -113,7 +113,7 @@ export default function Products() {
     return (
         <section className="products-page">
 
-            <div className="products-bg-video">
+            {/* <div className="products-bg-video">
                 <video
                     autoPlay
                     muted
@@ -125,7 +125,7 @@ export default function Products() {
                         type="video/mp4"
                     />
                 </video>
-            </div>
+            </div> */}
 
             <div className="products-content">
 
@@ -170,7 +170,7 @@ export default function Products() {
                 <div className="section-head">
 
                     <div>
-                        <span className="eyebrow">
+                        <span className=" catalog-text eyebrow">
                             CATALOG
                         </span>
 

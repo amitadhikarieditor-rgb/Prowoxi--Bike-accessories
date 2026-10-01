@@ -4,13 +4,18 @@ import {
     Heart,
     LogOut,
     LayoutDashboard,
-    Bell
+    Bell,
+    Menu,
+    X
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import { notifications } from '../api/resources';
 import { useEffect, useState } from 'react';
 import React from 'react';
+import ThemeToggle from "./ThemeToggle";
+
+import "../styles/HamburgerMenu.css";
 
 export default function Header() {
     const { user, logout } = useAuth();
@@ -18,6 +23,7 @@ export default function Header() {
     const nav = useNavigate();
 
     const [notification, setNotification] = useState(null);
+    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         if (!user) return;
@@ -40,17 +46,52 @@ export default function Header() {
 
     const handleNotificationClick = () => {
         setNotification(null);
+        setMenuOpen(false);
         nav('/notifications');
+    };
+
+    const closeMenu = () => {
+        setMenuOpen(false);
+    };
+
+    const toggleMenu = () => {
+        setMenuOpen(prev => {
+            const next = !prev;
+
+            if (next) {
+                setTimeout(() => {
+                    document.querySelector('.header')?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 50);
+            }
+
+            return next;
+        });
+    };
+
+    const handleLogout = async () => {
+        await logout();
+        setMenuOpen(false);
+        nav('/');
     };
 
     return (
         <>
             <header className="header">
-                 <Link className="brand" to="/">
-    PROWOXI
-</Link>
 
-                <nav>
+                <Link
+                    className="brand"
+                    to="/"
+                    onClick={closeMenu}
+                >
+                    PROWOXI
+                </Link>
+
+                {/* Desktop Navigation */}
+                <nav className="desktop-nav">
+
                     <Link to="/products">
                         Shop
                     </Link>
@@ -104,10 +145,7 @@ export default function Header() {
 
                             <button
                                 className="icon-btn"
-                                onClick={async () => {
-                                    await logout();
-                                    nav('/');
-                                }}
+                                onClick={handleLogout}
                             >
                                 <LogOut size={18} />
                             </button>
@@ -126,8 +164,140 @@ export default function Header() {
                             </Link>
                         </>
                     )}
+
+                    <ThemeToggle />
+
                 </nav>
+
+                {/* Mobile / Tablet Hamburger */}
+                <button
+                    className="hamburger-btn"
+                    onClick={toggleMenu}
+                    aria-label="Toggle menu"
+                >
+                    {menuOpen ? (
+                        <X size={24} />
+                    ) : (
+                        <Menu size={24} />
+                    )}
+                </button>
+
             </header>
+
+            {/* Hamburger Menu */}
+            {menuOpen && (
+                <div className="mobile-menu">
+
+                    <Link
+                        to="/products"
+                        onClick={closeMenu}
+                    >
+                        Shop
+                    </Link>
+
+                    {user && (
+                        <Link
+                            to="/wishlist"
+                            onClick={closeMenu}
+                        >
+                            <Heart size={18} />
+                            <span>Wishlist</span>
+                        </Link>
+                    )}
+
+                    <Link
+                        to="/cart"
+                        onClick={closeMenu}
+                    >
+                        <ShoppingBag size={18} />
+                        <span>Cart</span>
+
+                        <span className="mobile-count">
+                            {cart?.items?.reduce(
+                                (n, i) => n + i.quantity,
+                                0
+                            ) || 0}
+                        </span>
+                    </Link>
+
+                    {user ? (
+                        <>
+                            <Link
+                                to="/orders"
+                                onClick={closeMenu}
+                            >
+                                Orders
+                            </Link>
+
+                            <Link
+                                to="/notifications"
+                                onClick={handleNotificationClick}
+                            >
+                                <Bell size={18} />
+                                <span>Notifications</span>
+                            </Link>
+
+                            {user.role === 'admin' && (
+                                <Link
+                                    to="/admin"
+                                    onClick={closeMenu}
+                                >
+                                    <LayoutDashboard size={18} />
+                                    <span>Admin</span>
+                                </Link>
+                            )}
+
+                            <Link
+                                to="/profile"
+                                className="mobile-profile"
+                                onClick={closeMenu}
+                            >
+                                <div className="profile-av">
+                                    <h1>
+                                        {user?.name
+                                            ?.charAt(0)
+                                            .toUpperCase()}
+                                    </h1>
+                                </div>
+
+                                <span>
+                                    {user?.name || 'Profile'}
+                                </span>
+                            </Link>
+
+                            <button
+                                className="mobile-logout"
+                                onClick={handleLogout}
+                            >
+                                <LogOut size={18} />
+                                <span>Logout</span>
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <Link
+                                to="/login"
+                                onClick={closeMenu}
+                            >
+                                Login
+                            </Link>
+
+                            <Link
+                                className="btn small"
+                                to="/register"
+                                onClick={closeMenu}
+                            >
+                                Get started
+                            </Link>
+                        </>
+                    )}
+
+                    <div className="mobile-theme">
+                        <ThemeToggle />
+                    </div>
+
+                </div>
+            )}
 
             {notification && (
                 <div

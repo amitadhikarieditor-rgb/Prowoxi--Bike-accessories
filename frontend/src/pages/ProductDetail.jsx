@@ -4,6 +4,7 @@ import { products, reviews } from '../api/resources';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import ProductCard from '../components/ProductCard';
+import { MoreVertical, Trash2, Pencil } from 'lucide-react';
 
 export default function ProductDetail() {
 
@@ -22,16 +23,17 @@ export default function ProductDetail() {
     const [rating, setRating] = useState(5);
     const [currentImage, setCurrentImage] = useState(0);
 
+    const [openMenu, setOpenMenu] = useState(null);
+
+    // Edit review states
+    const [editingReview, setEditingReview] = useState(null);
+    const [editRating, setEditRating] = useState(5);
+
     const [zoom, setZoom] = useState({
         x: 0,
         y: 0,
         show: false
     });
-
-
-    /* =========================
-       FETCH PRODUCT
-    ========================= */
 
     useEffect(() => {
 
@@ -67,26 +69,11 @@ export default function ProductDetail() {
 
     }, [id]);
 
-
-    /* =========================
-       LOADING
-    ========================= */
-
     if (!p) {
         return <p>Loading…</p>;
     }
 
-
-    /* =========================
-       IMAGES
-    ========================= */
-
     const images = p.images || [];
-
-
-    /* =========================
-       NEXT IMAGE
-    ========================= */
 
     const nextImage = () => {
 
@@ -98,11 +85,6 @@ export default function ProductDetail() {
 
     };
 
-
-    /* =========================
-       PREVIOUS IMAGE
-    ========================= */
-
     const prevImage = () => {
 
         setCurrentImage(prev =>
@@ -112,11 +94,6 @@ export default function ProductDetail() {
         );
 
     };
-
-
-    /* =========================
-       ADD TO CART
-    ========================= */
 
     const addCart = async () => {
 
@@ -133,11 +110,7 @@ export default function ProductDetail() {
 
     };
 
-
-    /* =========================
-       ADD REVIEW
-    ========================= */
-
+    // Create review
     const review = async e => {
 
         e.preventDefault();
@@ -146,36 +119,146 @@ export default function ProductDetail() {
             return nav('/login');
         }
 
-        const r = await reviews.create(id, {
-            rating: Number(rating),
-            body
-        });
+        try {
 
-        setRs(x => [
-            r.data.data,
-            ...x
-        ]);
+            const r = await reviews.create(id, {
+                rating: Number(rating),
+                body
+            });
 
-        setBody('');
+            setRs(x => [
+                r.data.data,
+                ...x
+            ]);
+
+            setBody('');
+            setRating(5);
+
+        } catch (error) {
+
+            console.error(
+                'Create review error:',
+                error
+            );
+
+        }
 
     };
 
+    // Start editing review
+    const handleEditReview = r => {
+
+        setEditingReview(r);
+        setEditRating(r.rating);
+        setBody(r.body || '');
+        setOpenMenu(null);
+
+        setTimeout(() => {
+
+            document
+                .querySelector('.review-form')
+                ?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+
+        }, 100);
+
+    };
+
+    // Update review
+    const handleUpdateReview = async e => {
+
+        e.preventDefault();
+
+        if (!editingReview) {
+            return;
+        }
+
+        try {
+
+            const response = await reviews.update(
+                editingReview._id,
+                {
+                    rating: Number(editRating),
+                    body
+                }
+            );
+
+            setRs(current =>
+                current.map(review =>
+                    review._id === editingReview._id
+                        ? {
+                            ...review,
+                            ...response.data.data,
+                            user: review.user,
+                            isOwner: true
+                        }
+                        : review
+                )
+            );
+
+            setEditingReview(null);
+            setBody('');
+            setEditRating(5);
+            setRating(5);
+
+        } catch (error) {
+
+            console.error(
+                'Update review error:',
+                error
+            );
+
+        }
+
+    };
+
+    // Cancel editing
+    const handleCancelEdit = () => {
+
+        setEditingReview(null);
+        setBody('');
+        setEditRating(5);
+        setRating(5);
+
+    };
+
+    // Delete review
+    const handleDeleteReview = async reviewId => {
+
+        try {
+
+            if (!window.confirm('Delete this review?')) {
+                return;
+            }
+
+            await reviews.remove(reviewId);
+
+            setRs(current =>
+                current.filter(review => review._id !== reviewId)
+            );
+
+            setOpenMenu(null);
+
+        } catch (error) {
+
+            console.error(
+                'Delete review error:',
+                error
+            );
+
+        }
+
+    };
 
     return (
 
         <section className="detail">
 
-
-            {/* =====================================
-                PRODUCT IMAGE SLIDER
-            ===================================== */}
-
             <div className="product-slider-card">
 
                 <div className="product-slider">
-
-
-                    {/* PREVIOUS BUTTON */}
 
                     <button
                         className="slider-btn slider-prev"
@@ -184,9 +267,6 @@ export default function ProductDetail() {
                     >
                         ‹
                     </button>
-
-
-                    {/* IMAGE */}
 
                     {images.length > 0 && (
 
@@ -229,9 +309,6 @@ export default function ProductDetail() {
                                 alt={`${p.name} ${currentImage + 1}`}
                             />
 
-
-                            {/* ZOOM */}
-
                             {zoom.show && (
 
                                 <div
@@ -252,9 +329,6 @@ export default function ProductDetail() {
 
                     )}
 
-
-                    {/* NEXT BUTTON */}
-
                     <button
                         className="slider-btn slider-next"
                         onClick={nextImage}
@@ -264,9 +338,6 @@ export default function ProductDetail() {
                     </button>
 
                 </div>
-
-
-                {/* IMAGE DOTS */}
 
                 {images.length > 1 && (
 
@@ -296,45 +367,29 @@ export default function ProductDetail() {
 
             </div>
 
-
-            {/* =====================================
-                PRODUCT INFORMATION
-            ===================================== */}
-
             <div className="product-info">
 
                 <span className="eyebrow">
                     {p.category?.name}
                 </span>
 
-
                 <h1>
                     {p.name}
                 </h1>
-
 
                 <div className="price">
                     ₹{p.price.toLocaleString('en-IN')}
                 </div>
 
-
                 <p className="muted">
-
                     ★ {p.ratingAverage?.toFixed(1) || '0.0'}
-
                     {' · '}
-
                     {p.ratingCount || 0} reviews
-
                 </p>
-
 
                 <p>
                     {p.description}
                 </p>
-
-
-                {/* BUY ROW */}
 
                 <div className="buy-row">
 
@@ -349,46 +404,44 @@ export default function ProductDetail() {
                         }
                     />
 
-
                     <button
                         className="btn"
                         disabled={!p.stock}
                         onClick={addCart}
                     >
-
                         {p.stock
                             ? 'Add to cart'
                             : 'Out of stock'}
-
                     </button>
 
                 </div>
 
             </div>
 
-
-            {/* =====================================
-                REVIEWS
-            ===================================== */}
-
             <div className="reviews">
 
-                <h2>
-                    Reviews
-                </h2>
+                <div className="reviews-heading">
 
+                    <span className="eyebrow">
+                        CUSTOMER FEEDBACK
+                    </span>
 
-                {/* REVIEW FORM */}
+                    <h2>
+                        Reviews
+                    </h2>
+
+                </div>
 
                 {user && (
 
                     <form
-                        onSubmit={review}
-                        className="form"
+                        onSubmit={
+                            editingReview
+                                ? handleUpdateReview
+                                : review
+                        }
+                        className="form review-form"
                     >
-
-
-                        {/* STAR RATING */}
 
                         <div className="rating-input">
 
@@ -399,14 +452,24 @@ export default function ProductDetail() {
                                     key={star}
 
                                     className={
-                                        star <= rating
+                                        star <= (
+                                            editingReview
+                                                ? editRating
+                                                : rating
+                                        )
                                             ? 'star active'
                                             : 'star'
                                     }
 
-                                    onClick={() =>
-                                        setRating(star)
-                                    }
+                                    onClick={() => {
+
+                                        if (editingReview) {
+                                            setEditRating(star);
+                                        } else {
+                                            setRating(star);
+                                        }
+
+                                    }}
                                 >
                                     ★
                                 </button>
@@ -414,9 +477,6 @@ export default function ProductDetail() {
                             ))}
 
                         </div>
-
-
-                        {/* REVIEW TEXT */}
 
                         <textarea
                             value={body}
@@ -427,64 +487,215 @@ export default function ProductDetail() {
 
                             required
 
-                            placeholder="Share your experience"
+                            placeholder={
+                                editingReview
+                                    ? 'Update your experience'
+                                    : 'Share your experience'
+                            }
                         />
 
+                        <div className="review-form-actions">
 
-                        <button className="btn">
-                            Submit review
-                        </button>
+                            <button className="btn">
+                                {editingReview
+                                    ? 'Update review'
+                                    : 'Submit review'}
+                            </button>
+
+                            {editingReview && (
+
+                                <button
+                                    type="button"
+                                    className="btn"
+                                    onClick={handleCancelEdit}
+                                >
+                                    Cancel
+                                </button>
+
+                            )}
+
+                        </div>
 
                     </form>
 
                 )}
 
+                <div className="reviews-list">
 
-                {/* REVIEWS LIST */}
+                    {rs.length > 0 ? (
 
-                {rs.map(r => (
+                        rs.map(r => (
 
-                    <article
-                        className="review"
-                        key={r._id}
-                    >
+                            <article
+                                className="review"
+                                key={r._id}
+                            >
 
-                        <strong>
-                            {r.user?.name || 'Customer'}
-                        </strong>
+                                <div className="review-header">
 
+                                    <div className="review-user">
 
-                        <span>
-                            {' '}★ {r.rating}
-                        </span>
+                                        <div>
 
+                                            <h4>
+                                                {r.user?.name ||
+                                                    'Customer'}
+                                            </h4>
 
-                        <p>
-                            {r.body}
-                        </p>
+                                            {r.createdAt && (
 
+                                                <small>
+                                                    {new Date(
+                                                        r.createdAt
+                                                    ).toLocaleDateString(
+                                                        'en-IN',
+                                                        {
+                                                            day: 'numeric',
+                                                            month: 'short',
+                                                            year: 'numeric'
+                                                        }
+                                                    )}
+                                                </small>
 
-                        {r.verifiedPurchase && (
+                                            )}
 
-                            <small>
-                                Verified purchase
-                            </small>
+                                        </div>
 
-                        )}
+                                    </div>
 
-                    </article>
+                                    {r.isOwner && (
 
-                ))}
+                                        <div className="review-menu">
+
+                                            <button
+                                                type="button"
+                                                className="review-menu-btn"
+
+                                                onClick={() =>
+                                                    setOpenMenu(
+                                                        openMenu === r._id
+                                                            ? null
+                                                            : r._id
+                                                    )
+                                                }
+
+                                                aria-label="Review options"
+                                            >
+
+                                                <MoreVertical
+                                                    size={22}
+                                                    strokeWidth={2}
+                                                />
+
+                                            </button>
+
+                                            {openMenu === r._id && (
+
+                                                <div className="review-dropdown">
+
+                                                    <button
+                                                        type="button"
+                                                        className="edit-review"
+
+                                                        onClick={() =>
+                                                            handleEditReview(r)
+                                                        }
+                                                    >
+
+                                                        <Pencil size={15} />
+
+                                                        <div>
+                                                            Edit
+                                                            </div>
+
+                                                       
+                                                        
+
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        className="delete-review"
+
+                                                        onClick={() =>
+                                                            handleDeleteReview(
+                                                                r._id
+                                                            )
+                                                        }
+                                                    >
+
+                                                        <Trash2 size={15} />
+
+                                                        <span>
+                                                            Delete
+                                                        </span>
+
+                                                    </button>
+
+                                                </div>
+
+                                            )}
+
+                                        </div>
+
+                                    )}
+
+                                </div>
+
+                                <div className="review-rating">
+
+                                    {[1, 2, 3, 4, 5].map(star => (
+
+                                        <span
+                                            key={star}
+
+                                            className={
+                                                star <= r.rating
+                                                    ? 'filled'
+                                                    : ''
+                                            }
+                                        >
+                                            ★
+                                        </span>
+
+                                    ))}
+
+                                </div>
+
+                                <p className="review-comment">
+                                    {r.body}
+                                </p>
+
+                                {r.verifiedPurchase && (
+
+                                    <span className="verified-review">
+                                        ✓ Verified purchase
+                                    </span>
+
+                                )}
+
+                            </article>
+
+                        ))
+
+                    ) : (
+
+                        <div className="no-reviews">
+
+                            <p>
+                                No reviews yet. Be the first to
+                                share your experience.
+                            </p>
+
+                        </div>
+
+                    )}
+
+                </div>
 
             </div>
 
-
-            {/* =====================================
-                ALL PRODUCTS
-            ===================================== */}
-
             <div className="related-products">
-
 
                 <div className="section-head">
 
@@ -502,9 +713,6 @@ export default function ProductDetail() {
 
                 </div>
 
-
-                {/* PRODUCT GRID */}
-
                 <div className="grid">
 
                     {allProducts.map(product => (
@@ -519,7 +727,6 @@ export default function ProductDetail() {
                 </div>
 
             </div>
-
 
         </section>
 

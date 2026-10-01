@@ -1,0 +1,47 @@
+.theme-btn {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 50%;
+
+    background: transparent;
+    color: #2c2c27;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.theme-btn:hover {
+    background: #f3f4f6;
+    transform: translateY(-1px);
+}
+
+[data-theme="dark"] {
+    background: #363730;
+    color: #f9fafb;
+}
+
+[data-theme="dark"] body {
+   background: linear-gradient(90deg, #636365 0%, #192f3b 50%, #060606 100%);
+    color: #c99595;
+}
+
+[data-theme="dark"] .theme-btn {
+    border-color: #090909;
+    color: #f3f3f3;
+}
+
+[data-theme="dark"] .theme-btn:hover {
+    background: #063271;
+}
+
