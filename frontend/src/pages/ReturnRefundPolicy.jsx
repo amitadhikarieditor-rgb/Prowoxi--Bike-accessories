@@ -1,7 +1,12 @@
-import React from "react";
+import React,{useEffect} from "react";
 import "../styles/returnRefundPolicy.css";
 
 export default function ReturnRefundPolicy() {
+
+    useEffect(() => {
+    document.title = "PROWOXI-SHIPPING POLICY"
+},[]);
+
     return (
         <main className="return-page">
 

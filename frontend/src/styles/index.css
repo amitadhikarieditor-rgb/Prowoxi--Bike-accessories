@@ -352,7 +352,7 @@ section {
 }
 
 .muted {
-    color: #93A5A8;
+    color: #141414;
 }
 
 .rating {
@@ -561,11 +561,34 @@ section {
     position: relative;
     width: 100%;
     padding: 22px 24px;
-    background: #fff;
-    border: 1px solid #e8e8e8;
+
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(10px) saturate(160%);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+
+    border: 1px solid rgba(255, 255, 255, 0.7);
     border-radius: 16px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, .04);
-    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
+}
+
+.review:hover {
+    transform: translateY(-3px);
+
+    background: rgba(255, 255, 255, 0.55);
+
+    border-color: rgba(255, 255, 255, 0.9);
+
+    box-shadow:
+        0 14px 35px rgba(0, 0, 0, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .review:hover {
@@ -587,20 +610,6 @@ section {
     align-items: center;
     gap: 12px;
     min-width: 0;
-}
-
-.review-avatar {
-    width: 42px;
-    height: 42px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ff3333, #b30000);
-    color: #fff;
-    font-size: 15px;
-    font-weight: 700;
 }
 
 .review-user h4 {
@@ -940,7 +949,7 @@ section {
 }
 
 .muted-text {
-    color: #9FC5C7;
+    color: #070707;
 }
 
 .product-form-card {
@@ -1341,7 +1350,7 @@ section {
 
 .admin-content {
     padding: 40px;
-    max-width: 1200px;
+    max-width: 1400px;
     width: 100%;
 }
 

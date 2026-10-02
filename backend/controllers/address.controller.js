@@ -1,6 +1,13 @@
 import Address from '../models/Address.js'; 
+
 export async function list(req,res){
-    res.json({success:true,data:await Address.find({user:req.user._id}).sort('-isDefault -createdAt')});}
+    res.json({
+        success:true,
+        data:await Address.find({
+            user:req.user._id
+        })
+        .sort('-isDefault -createdAt')});
+    }
     
     export async function create(req,res){
         if(req.body.isDefault)

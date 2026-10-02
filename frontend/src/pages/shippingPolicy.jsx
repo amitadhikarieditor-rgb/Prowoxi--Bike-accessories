@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/shippingPolicy.css";
 
 export default function ShippingPolicy() {
+
+    useEffect(() => {
+    document.title = "PROWOXI-SHIPPING POLICY"
+},[]);
+
     return (
         <main className="shipping-page">
 

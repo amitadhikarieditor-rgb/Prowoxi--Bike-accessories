@@ -1,6 +1,8 @@
 import {createClient} from 'redis';
 import {env} from './env.js';
+
 let client=null;
+
 export async function connectRedis(){
  if(!env.redisUrl){
     console.log('Redis disabled (REDIS_URL not set)');

@@ -4,6 +4,7 @@ import ProductCard from '../components/ProductCard';
 export default function Wishlist(){const [d,setD]=useState([]);
     const load=()=>wishlist.get().then(r=>setD(r.data.data.products||[]));
     useEffect(() => {
+      document.title = 'PROWOXI - Wishlist';
     load();
 }, []);
       return (

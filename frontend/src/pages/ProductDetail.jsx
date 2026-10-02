@@ -35,6 +35,7 @@ export default function ProductDetail() {
     });
 
     useEffect(() => {
+         document.title = 'PROVOXI - Product';
 
         setP(null);
         setCurrentImage(0);

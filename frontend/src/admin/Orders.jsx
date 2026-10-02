@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { admin } from '../api/resources';
 
 export default function Orders() {
-    const [d, setD] = useState([]);
+    const [data, setdata] = useState([]);
 
     const load = () => {
         admin.orders().then(r => {
-            setD(r.data.data);
+            setdata(r.data.data);
         });
     };
 
@@ -18,9 +18,9 @@ export default function Orders() {
         try {
             await admin.updateOrderStatus(id, { status });
             load();
-        } catch (e) {
+        } catch (Error) {
             alert(
-                e.response?.data?.message ||
+                Error.response?.data?.message ||
                 'Failed to update order status'
             );
         }
@@ -34,9 +34,9 @@ export default function Orders() {
         try {
             await admin.deleteOrder(id);
             load();
-        } catch (e) {
+        } catch (Error) {
             alert(
-                e.response?.data?.message ||
+                Error.response?.data?.message ||
                 'Failed to delete order'
             );
         }
@@ -63,6 +63,7 @@ export default function Orders() {
                         <tr>
                             <th>Order</th>
                             <th>User</th>
+                            <th>Products</th>
                             <th>Address</th>
                             <th>Total</th>
                             <th>Status</th>
@@ -72,40 +73,65 @@ export default function Orders() {
                     </thead>
 
                     <tbody>
-                        {d.map(o => (
-                            <tr key={o._id}>
+                        {data.map(Order => (
+                            <tr key={Order._id}>
                                 <td>
-                                    {o.orderNumber}
+                                    {Order.orderNumber}
                                 </td>
 
                                 <td>
-                                    {o.user?.email || 'User'}
+                                    {Order.user?.email || 'User'}
                                 </td>
 
                                 <td>
-                                    {o.addressSnapshot ? (
+                                    {Order.items?.length > 0 ? (
+                                        <div className="order-products">
+                                            {Order.items.map((item, index) => (
+                                                <div
+                                                    key={item._id || index}
+                                                    className="order-product"
+                                                >
+                                                    <strong>
+                                                        {item.product?.name ||
+                                                            item.name ||
+                                                            'Product'}
+                                                    </strong>
+
+                                                    <span>
+                                                        Qty: {item.quantity}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        'No products'
+                                    )}
+                                </td>
+
+                                <td>
+                                    {Order.addressSnapshot ? (
                                         <>
-                                            {o.addressSnapshot.fullName}
+                                            {Order.addressSnapshot.fullName}
                                             <br />
 
-                                            {o.addressSnapshot.addressLine1}
+                                            {Order.addressSnapshot.addressLine1}
                                             <br />
 
-                                            {o.addressSnapshot.addressLine2 && (
+                                            {Order.addressSnapshot.addressLine2 && (
                                                 <>
-                                                    {o.addressSnapshot.addressLine2}
+                                                    {Order.addressSnapshot.addressLine2}
                                                     <br />
                                                 </>
                                             )}
 
-                                            {o.addressSnapshot.city},{' '}
-                                            {o.addressSnapshot.state}
+                                            {Order.addressSnapshot.city},{' '}
+                                            {Order.addressSnapshot.state}
                                             <br />
 
-                                            {o.addressSnapshot.pincode}
+                                            {Order.addressSnapshot.pincode}
                                             <br />
 
-                                            {o.addressSnapshot.phone}
+                                            {Order.addressSnapshot.phone}
                                         </>
                                     ) : (
                                         'No address'
@@ -113,21 +139,21 @@ export default function Orders() {
                                 </td>
 
                                 <td>
-                                    ₹{o.total}
+                                    ₹{Order.total}
                                 </td>
 
                                 <td>
-                                    {o.orderStatus}
+                                    {Order.orderStatus}
                                 </td>
 
                                 <td>
-                                    {nextStatus[o.orderStatus]?.length > 0 && (
+                                    {nextStatus[Order.orderStatus]?.length > 0 && (
                                         <select
                                             value=""
-                                            onChange={e =>
+                                            onChange={Error =>
                                                 updateStatus(
-                                                    o._id,
-                                                    e.target.value
+                                                    Order._id,
+                                                    Error.target.value
                                                 )
                                             }
                                         >
@@ -135,7 +161,7 @@ export default function Orders() {
                                                 Update
                                             </option>
 
-                                            {nextStatus[o.orderStatus].map(
+                                            {nextStatus[Order.orderStatus].map(
                                                 status => (
                                                     <option
                                                         key={status}
@@ -150,12 +176,12 @@ export default function Orders() {
                                 </td>
 
                                 <td>
-                                    {(o.orderStatus === 'DELIVERED' ||
-                                        o.orderStatus === 'CANCELLED') && (
+                                    {(Order.orderStatus === 'DELIVERED' ||
+                                        Order.orderStatus === 'CANCELLED') && (
                                         <button
                                             className="btn danger"
                                             onClick={() =>
-                                                deleteOrder(o._id)
+                                                deleteOrder(Order._id)
                                             }
                                         >
                                             Delete
