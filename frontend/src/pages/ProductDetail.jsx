@@ -25,7 +25,6 @@ export default function ProductDetail() {
 
     const [openMenu, setOpenMenu] = useState(null);
 
-    // Edit review states
     const [editingReview, setEditingReview] = useState(null);
     const [editRating, setEditRating] = useState(5);
 
@@ -110,7 +109,6 @@ export default function ProductDetail() {
 
     };
 
-    // Create review
     const review = async e => {
 
         e.preventDefault();
@@ -145,7 +143,7 @@ export default function ProductDetail() {
 
     };
 
-    // Start editing review
+
     const handleEditReview = r => {
 
         setEditingReview(r);
@@ -166,7 +164,7 @@ export default function ProductDetail() {
 
     };
 
-    // Update review
+
     const handleUpdateReview = async e => {
 
         e.preventDefault();
@@ -214,7 +212,7 @@ export default function ProductDetail() {
 
     };
 
-    // Cancel editing
+ 
     const handleCancelEdit = () => {
 
         setEditingReview(null);
@@ -224,7 +222,7 @@ export default function ProductDetail() {
 
     };
 
-    // Delete review
+
     const handleDeleteReview = async reviewId => {
 
         try {

@@ -288,4 +288,4 @@ export async function verifyPayment(req, res) {
         success: true,
         data: o
     });
-}
+};

@@ -74,7 +74,7 @@ export default function Footer() {
                         +91 70489 59793
                     </a>
 
-                    <a href="mailto:support@provoxi.com">
+                    <a href="mailto:prowoxibikeaccessories@gmail.com">
                         support@provoxi.com
                     </a>
                 </div>

@@ -3,7 +3,10 @@ import Wishlist from '../models/Wishlist.js';
 import Product from '../models/Product.js'; 
 
 export async function view(req,res){
-    const w=await Wishlist.findOne({user:req.user._id}).populate('products');
+
+    const w=await Wishlist.findOne({
+        user:req.user._id
+    }).populate('products');
     res.json({success:true,data:w||{user:req.user._id,products:[]}});} 
     
     export async function toggle(req,res){
