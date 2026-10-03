@@ -89,7 +89,7 @@ export default function Header() {
                     PROWOXI
                 </Link>
 
-                {/* Desktop Navigation */}
+        
                 <nav className="desktop-nav">
 
                     <Link to="/products">
@@ -168,8 +168,6 @@ export default function Header() {
                     <ThemeToggle />
 
                 </nav>
-
-                {/* Mobile / Tablet Hamburger */}
                 <button
                     className="hamburger-btn"
                     onClick={toggleMenu}
@@ -183,8 +181,6 @@ export default function Header() {
                 </button>
 
             </header>
-
-            {/* Hamburger Menu */}
             {menuOpen && (
                 <div className="mobile-menu">
 
@@ -320,3 +316,5 @@ export default function Header() {
         </>
     );
 }
+
+

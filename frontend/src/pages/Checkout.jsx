@@ -11,6 +11,8 @@ export default function Checkout() {
     const [selected, setSelected] = useState('');
 
     useEffect(() => {
+        document.title = 'PROVOXI - Checkout';
+
         addresses.list().then(r => {
             setAs(r.data.data);
 

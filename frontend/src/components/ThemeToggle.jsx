@@ -3,35 +3,42 @@ import { Sun, Moon } from "lucide-react";
 import "../styles/ThemeToggle.css";
 
 export default function ThemeToggle() {
-    const [darkMode, setDarkMode] = useState(() => {
-        return localStorage.getItem("provoxi-theme") === "dark";
+    const [dark, setDark] = useState(() => {
+        return localStorage.getItem("theme") === "dark";
     });
 
     useEffect(() => {
         document.documentElement.setAttribute(
             "data-theme",
-            darkMode ? "dark" : "light"
+            dark ? "dark" : "light"
         );
 
         localStorage.setItem(
-            "provoxi-theme",
-            darkMode ? "dark" : "light"
+            "theme",
+            dark ? "dark" : "light"
         );
-    }, [darkMode]);
+    }, [dark]);
+
+    const toggleTheme = () => {
+        setDark(prev => !prev);
+    };
 
     return (
         <button
             type="button"
-            className="theme-btn"
-            onClick={() => setDarkMode((prev) => !prev)}
+            className={`theme-toggle ${dark ? "dark" : "light"}`}
+            onClick={toggleTheme}
             aria-label="Toggle theme"
-            title={darkMode ? "Light mode" : "Dark mode"}
         >
-            {darkMode ? (
-                <Sun size={20} />
-            ) : (
-                <Moon size={20} />
-            )}
+            <span className="theme-icon sun">
+                <Sun size={15} />
+            </span>
+
+            <span className="theme-icon moon">
+                <Moon size={15} />
+            </span>
+
+            <span className="theme-thumb" />
         </button>
     );
 }

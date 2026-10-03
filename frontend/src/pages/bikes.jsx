@@ -10,6 +10,8 @@ const bikes = [
 
 export default function Bikes() {
     return (
+
+        
         <section className="bikes-page">
             <div className="section-head">
                 <div>
