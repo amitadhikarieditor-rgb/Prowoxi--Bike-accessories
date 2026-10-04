@@ -12,6 +12,10 @@ export default function Notifications() {
         load();
     }, []);
 
+    useEffect(() => {
+        document.title = 'Notification- PROWOXI';
+    }, []);
+
     return (
         <section style={{ marginTop: '200px' }}>
             <h1>Notifications</h1>

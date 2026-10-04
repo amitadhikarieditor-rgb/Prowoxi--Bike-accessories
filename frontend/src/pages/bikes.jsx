@@ -9,9 +9,11 @@ const bikes = [
 ];
 
 export default function Bikes() {
-    return (
+    useEffect(() => {
+        document.title = "EXPLORE- PROWOXI";
+    }, []);
 
-        
+    return (
         <section className="bikes-page">
             <div className="section-head">
                 <div>

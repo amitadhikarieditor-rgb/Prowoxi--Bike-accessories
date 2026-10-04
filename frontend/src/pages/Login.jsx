@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
+import {useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import video from '../styles/285224_medium.mp4';
 
 export default function Login() {
+
+    useEffect(() => {
+        document.title = 'LOGIN- PROWOXI';
+    }, []);
+
+
     const { login } = useAuth();
     const nav = useNavigate();
 

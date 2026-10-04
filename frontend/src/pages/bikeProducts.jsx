@@ -55,8 +55,8 @@ export default function BikeProducts() {
     );
 
     useEffect(() => {
-        document.title = "PROVOXI"- `${currentBike?.name || 'Bike'} Accessories`;
-    }, [currentBike]);
+    document.title = `${currentBike?.name || "Bike"} Accessories- PROWOXI`;
+}, [currentBike]);
 
     useEffect(() => {
         setLoading(true);

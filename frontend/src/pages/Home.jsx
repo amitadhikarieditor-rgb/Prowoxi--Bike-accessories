@@ -5,7 +5,7 @@ import video from '../styles/285224_medium.mp4';
 export default function Home() {
 
     useEffect(() => {
-        document.title = 'PROVOXI - Bike Accessories';
+        document.title = 'WELCOME- PROWOXI';
     }, []);
 
     return (
