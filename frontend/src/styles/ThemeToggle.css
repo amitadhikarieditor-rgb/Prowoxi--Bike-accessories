@@ -15,10 +15,10 @@
     cursor: pointer;
 
     transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
+        background 2s ease,
+        color 2s ease,
+        border-color 2s ease,
+        transform 2s ease;
 }
 
 .theme-btn:hover {
@@ -65,8 +65,8 @@
     background: #f1f1f1;
 
     transition:
-        background 0.25s ease,
-        border-color 0.25s ease;
+        background 1s ease,
+        border-color 1s ease;
 
     overflow: hidden;
 }
@@ -83,8 +83,8 @@
     z-index: 2;
 
     transition:
-        color 0.25s ease,
-        opacity 0.25s ease;
+        color 3s ease,
+        opacity 3s ease;
 }
 
 .theme-icon.sun {
@@ -92,7 +92,7 @@
 }
 
 .theme-icon.moon {
-    color: #6366f1;
+    color: #8d8eba;
 }
 
 .theme-thumb {
@@ -112,18 +112,18 @@
         0 2px 8px rgba(0, 0, 0, 0.18);
 
     transition:
-        transform 0.25s ease,
-        background 0.25s ease;
+        transform 1s ease,
+        background 1s ease;
 }
 
 .theme-toggle.dark {
-    background: #936156;
+    background: #034aff32;
     border-color: rgba(255, 255, 255, 0.15);
 }
 
 .theme-toggle.dark .theme-thumb {
     transform: translateX(30px);
-    background: #0c1769;
+    background: #545454;
 }
 
 .theme-toggle.dark .sun {
