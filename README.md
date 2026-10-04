@@ -1,52 +1,42 @@
-# Provoxi — Production-style E-commerce Starter
+# Provoxi
 
-Provoxi is a full-stack e-commerce application built with React, Express, MongoDB/Mongoose and optional Redis, Razorpay, Cloudinary and email integrations.
+Provoxi is a full-stack e-commerce website developed for a client to manage products, customers, orders and online payments through a modern web platform.
 
-## Included
-- JWT authentication in HTTP-only cookies
-- Refresh tokens, email verification/reset-password token flows
-- RBAC for user/admin
-- Product/category CRUD, search, filters, sorting and pagination
-- Cart, wishlist, addresses and coupons
-- Checkout and order lifecycle
-- Razorpay integration with server-side signature verification + webhook endpoint
-- Reviews with verified-purchase detection
-- Notifications and optional email delivery
-- Redis cache-aside layer with invalidation
-- Admin dashboard, products, users, orders, reviews and coupons
-- Helmet, CORS, rate limiting, validation, centralized errors and audit logs
-- React responsive UI with protected routes and admin area
+## Features
 
-## Run
-1. Copy `backend/.env.example` to `backend/.env` and fill MongoDB credentials at minimum.
-2. Install backend dependencies: `cd backend && npm install`.
-3. Run backend: `npm run dev`.
-4. Install frontend dependencies: `cd ../frontend && npm install`.
-5. Run frontend: `npm run dev`.
-6. API defaults to `http://localhost:5000/api`; frontend defaults to `http://localhost:5173`.
+* Secure user authentication with JWT and HTTP-only cookies
+* Email verification and password reset
+* Product browsing with search, filtering, sorting and pagination
+* Product categories and detailed product pages
+* Shopping cart and wishlist
+* Address and coupon management
+* Razorpay payment integration with server-side verification
+* Order placement and order status management
+* Product reviews and ratings with verified purchase detection
+* User notifications and email support
+* Admin dashboard for business management
+* Product, category, user and order management
+* Review and coupon management
+* Role-based access control
+* Responsive design across desktop and mobile devices
 
-## Seed data
-From `backend`:
-`npm run seed`
+## Tech Stack
 
-Seeded admin:
-- email: `admin@provoxi.local`
-- password: `Admin@12345`
-
-Change it immediately outside local development.
-
-## Optional services
-The app still boots if Redis, Cloudinary, Razorpay or SMTP are not configured. Their production features will be disabled with clear server logs.
+**Frontend:** React.js, Vite, Axios, React Router
+**Backend:** Node.js, Express.js
+**Database:** MongoDB, Mongoose
+**Authentication:** JWT, HTTP-only Cookies
+**Payments:** Razorpay
+**Media:** Cloudinary
+**Email:** SMTP
+**Caching:** Redis
 
 ## Architecture
-Frontend: React/Vite -> Axios API client -> Express REST API -> Services -> Mongoose/MongoDB. Redis is used as an optional cache/session-support layer. Payment and email providers are isolated behind services.
 
-## Production checklist
-- Set strong secrets and `NODE_ENV=production`
-- Configure a real MongoDB replica set if using transactions
-- Configure HTTPS and secure cookies
-- Configure Razorpay webhook URL and secret
-- Configure Redis, SMTP and Cloudinary
-- Rotate seeded admin credentials
-- Add centralized logs/monitoring
-- Review CORS allow-list and rate limits
+The application follows a modular full-stack architecture with a React frontend, Express REST API, MongoDB database and separate service layers for authentication, payments, email, media and caching.
+
+The system is designed around secure API communication, role-based authorization and server-side validation for critical operations.
+
+---
+
+**Provoxi — Client E-commerce Platform**
