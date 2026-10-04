@@ -7,7 +7,7 @@ export default function Addresses() {
         document.title = 'PROVOXI - Addresses';
     }, []);
 
-    const [d, setD] = useState([]);
+    const [Data, SetData] = useState([]);
     const [f, setF] = useState({
         fullName: '',
         line1: '',
@@ -19,7 +19,7 @@ export default function Addresses() {
     });
 
     const load = () => {
-        addresses.list().then(r => setD(r.data.data));
+        addresses.list().then(r => SetData(r.data.data));
     };
 
     useEffect(() => {
@@ -148,7 +148,7 @@ export default function Addresses() {
                 </form>
 
                 <div className="list">
-                    {d.map(a => (
+                    {Data.map(a => (
                         <div className="card" key={a._id}>
                             <strong>{a.fullName}</strong>
 

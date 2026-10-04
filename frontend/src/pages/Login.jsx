@@ -21,14 +21,14 @@ export default function Login() {
 
     const [error, setError] = useState('');
 
-    const submit = async e => {
-        e.preventDefault();
+    const submit = async err => {
+        err.preventDefault();
 
         try {
             await login(form);
             nav('/');
-        } catch (e) {
-            setError(e.response?.data?.message || 'Login failed');
+        } catch (err) {
+            setError(err.response?.data?.message || 'Login failed');
         }
     };
 
@@ -57,8 +57,8 @@ export default function Login() {
                     required
                     placeholder="Email"
                     value={form.email}
-                    onChange={e =>
-                        setForm({ ...form, email: e.target.value })
+                    onChange={err =>
+                        setForm({ ...form, email: err.target.value })
                     }
                 />
 
@@ -67,8 +67,8 @@ export default function Login() {
                     required
                     placeholder="Password"
                     value={form.password}
-                    onChange={e =>
-                        setForm({ ...form, password: e.target.value })
+                    onChange={err =>
+                        setForm({ ...form, password: err.target.value })
                     }
                 />
 

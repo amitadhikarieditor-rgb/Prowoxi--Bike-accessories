@@ -8,7 +8,7 @@ export default function Orders() {
     useEffect(() => {
         orders
             .list()
-            .then((r) => setData(r.data.data))
+            .then((res) => setData(res.data.data))
             .catch((err) => {
                 console.error("Failed to load orders:", err);
             });
@@ -23,23 +23,23 @@ export default function Orders() {
             <h1>Orders</h1>
 
             <div className="list">
-                {data.map((o) => (
+                {data.map((Order) => (
                     <Link
                         className="order-row"
-                        key={o._id}
-                        to={`/orders/${o._id}`}
+                        key={Order._id}
+                        to={`/orders/${Order._id}`}
                     >
                         <div>
-                            <strong>{o.orderNumber}</strong>
+                            <strong>{Order.orderNumber}</strong>
 
                             <p>
-                                {o.items?.length || 0} items ·{" "}
-                                {o.orderStatus}
+                                {Order.items?.length || 0} items ·{" "}
+                                {Order.orderStatus}
                             </p>
                         </div>
 
                         <strong>
-                            ₹{o.total?.toLocaleString("en-IN")}
+                            ₹{Order.total?.toLocaleString("en-IN")}
                         </strong>
                     </Link>
                 ))}

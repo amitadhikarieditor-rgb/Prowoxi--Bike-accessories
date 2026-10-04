@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { notifications } from '../api/resources';
 
 export default function Notifications() {
-    const [d, setD] = useState([]);
+    const [Data, setData] = useState([]);
 
     const load = () =>
-        notifications.list().then(r => setD(r.data.data));
+        notifications.list().then(res => setData(res.data.data));
 
     useEffect(() => {
         console.log('NOTIFICATIONS PAGE LOADED');
@@ -21,27 +21,27 @@ export default function Notifications() {
             <h1>Notifications</h1>
 
             <div className="list">
-                {d.map(n => (
+                {Data.map(num => (
                     <article
-                        className={`notification ${n.isRead ? 'read' : ''}`}
-                        key={n._id}
+                        className={`notification ${num.isRead ? 'read' : ''}`}
+                        key={num._id}
                     >
-                        <strong>{n.title}</strong>
+                        <strong>{num.title}</strong>
 
-                        <p>{n.message}</p>
+                        <p>{num.message}</p>
 
                         <small>
-                            {new Date(n.createdAt).toLocaleString('en-IN', {
+                            {new Date(num.createdAt).toLocaleString('en-IN', {
                                 dateStyle: 'medium',
                                 timeStyle: 'short'
                             })}
                         </small>
 
-                        {!n.isRead && (
+                        {!num.isRead && (
                             <button
                                 className="link-btn"
                                 onClick={() =>
-                                    notifications.read(n._id).then(load)
+                                    notifications.read(num._id).then(load)
                                 }
                             >
                                 Mark read

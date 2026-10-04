@@ -7,7 +7,7 @@ export default function Register() {
     const { register } = useAuth();
     const nav = useNavigate();
 
-    const [f, setF] = useState({
+    const [Form, SetForm] = useState({
         name: '',
         email: '',
         password: ''
@@ -19,7 +19,7 @@ export default function Register() {
         e.preventDefault();
 
         try {
-            await register(f);
+            await register(Form);
             nav('/');
         } catch (e) {
             setError(e.response?.data?.message || 'Registration failed');
@@ -49,16 +49,16 @@ export default function Register() {
                 <input
                     required
                     placeholder="Full name"
-                    value={f.name}
-                    onChange={e => setF({ ...f, name: e.target.value })}
+                    value={Form.name}
+                    onChange={e => SetForm({ ...Form, name: e.target.value })}
                 />
 
                 <input
                     required
                     type="email"
                     placeholder="Email"
-                    value={f.email}
-                    onChange={e => setF({ ...f, email: e.target.value })}
+                    value={Form.email}
+                    onChange={e => SetForm({ ...Form, email: e.target.value })}
                 />
 
                 <input
@@ -66,8 +66,8 @@ export default function Register() {
                     minLength="8"
                     type="password"
                     placeholder="Password"
-                    value={f.password}
-                    onChange={e => setF({ ...f, password: e.target.value })}
+                    value={Form.password}
+                    onChange={e => SetForm({ ...Form, password: e.target.value })}
                 />
 
                 <button className="btn">Create account</button>

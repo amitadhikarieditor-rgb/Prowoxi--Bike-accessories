@@ -7,18 +7,18 @@ export default function Checkout() {
     const { cart } = useCart();
     const nav = useNavigate();
 
-    const [as, setAs] = useState([]);
+    const [Add, SetAdd] = useState([]);
     const [selected, setSelected] = useState('');
 
     useEffect(() => {
         document.title = 'Checkout-PROVOXI';
 
-        addresses.list().then(r => {
-            setAs(r.data.data);
+        addresses.list().then(res => {
+            SetAdd(res.data.data);
 
             setSelected(
-                r.data.data.find(x => x.isDefault)?._id ||
-                r.data.data[0]?._id ||
+                res.data.data.find(x => x.isDefault)?._id ||
+                res.data.data[0]?._id ||
                 ''
             );
         });
@@ -30,11 +30,11 @@ export default function Checkout() {
         }
 
         try {
-            const r = await orders.create({
+            const res = await orders.create({
                 addressId: selected
             });
 
-            const p = r.data.data.payment;
+            const p = res.data.data.payment;
 
             if (window.Razorpay && p?.orderId) {
                 const rz = new window.Razorpay({
@@ -64,7 +64,7 @@ export default function Checkout() {
 
                     handler: async (resp) => {
                         await orders.verify({
-                            orderId: r.data.data.order._id,
+                            orderId: res.data.data.order._id,
                             paymentId: resp.razorpay_payment_id
                         });
 
@@ -98,7 +98,7 @@ export default function Checkout() {
                 <div className="card form">
                     <h3>Delivery address</h3>
 
-                    {as.map(a => (
+                    {Add.map(a => (
                         <label
                             className="address"
                             key={a._id}
@@ -123,7 +123,7 @@ export default function Checkout() {
                         </label>
                     ))}
 
-                    {!as.length && (
+                    {!Add.length && (
                         <p>
                             No address yet. Add one from your
                             account/profile area.
