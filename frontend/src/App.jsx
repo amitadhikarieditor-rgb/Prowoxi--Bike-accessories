@@ -24,10 +24,10 @@ import About from "./pages/About";
 import ShippingPolicy from "./pages/ShippingPolicy.jsx";
 import Privacy from './pages/Privacy.jsx';
 import Terms from './pages/Terms.jsx';
+import Error from "./pages/Error.jsx";
 
 import Bikes from "./pages/bikes.jsx";
 import BikeProducts from "./pages/BikeProducts";
-import NotFound from "./pages/notFound.jsx";
 
 import AdminLayout from "./admin/AdminLayout";
 import Dashboard from "./admin/Dashboard";
@@ -185,10 +185,7 @@ export default function App() {
                     </Route>
 
                 </Route>
-                <Route
-                    path="*"
-                    element={<NotFound />}
-                />
+                <Route path="*" element={<Error />} />
 
             </Routes>
         </BrowserRouter>
