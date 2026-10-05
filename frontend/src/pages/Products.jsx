@@ -110,6 +110,11 @@ export default function Products() {
         loadWishlist();
     }, [sort]);
 
+    useEffect(() => {
+        document.title = 'EXPLORE- PROWOXI';
+    }, []);
+
+
     return (
         <section className="products-page">
 

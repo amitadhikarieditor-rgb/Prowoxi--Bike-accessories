@@ -1,7 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
+
 import "../styles/Privacy.css";
 
 export default function PrivacyPolicy() {
+     useEffect(() => {
+        document.title = 'Privacy- PROWOXI';
+    }, []);
+
     return (
         <main className="privacy-page">
             <div className="privacy-container">

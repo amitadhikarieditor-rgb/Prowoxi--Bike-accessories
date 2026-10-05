@@ -4,7 +4,7 @@ import "../styles/returnRefundPolicy.css";
 export default function ReturnRefundPolicy() {
 
     useEffect(() => {
-    document.title = "PROWOXI-SHIPPING POLICY"
+    document.title = "PROWOXI-REFUND POLICY"
 },[]);
 
     return (

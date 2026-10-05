@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {useEffect} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import video from '../styles/285224_medium.mp4';
@@ -25,6 +26,10 @@ export default function Register() {
             setError(e.response?.data?.message || 'Registration failed');
         }
     };
+
+    useEffect(() => {
+        document.title = 'Register- PROWOXI';
+    }, []);
 
     return (
         <section className="auth">
