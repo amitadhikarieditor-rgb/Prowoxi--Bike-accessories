@@ -195,7 +195,7 @@ section {
     font-size: .75rem;
     letter-spacing: .16em;
     font-weight: 1000;
-    color: rgb(37, 61, 64);
+    color: rgb(93, 134, 140);
 }
 
 .section-head {
@@ -511,7 +511,7 @@ section {
 }
 
 .buy-row input {
-    width: 80px;
+    width: 70px;
     border: 1px solid #dddcd5;
     background-color: rgba(255, 254, 254, 0.49);
     border-radius: 11px;
