@@ -7,9 +7,18 @@ export default function AdminLayout(){
     
     <div className="admin-shell">
         <aside><strong>PROVOXI ADMIN</strong>
-        <NavLink to="/admin">Dashboard</NavLink><NavLink to="/admin/products">Products</NavLink>
-        <NavLink to="/admin/users">Users</NavLink><NavLink to="/admin/orders">Orders</NavLink>
-        <NavLink to="/admin/reviews">Reviews</NavLink><NavLink to="/admin/coupons">Coupons</NavLink>
+
+        <NavLink to="/admin">Dashboard</NavLink>
+        
+        <NavLink to="/admin/products">Products</NavLink>
+
+        <NavLink to="/admin/users">Users</NavLink>
+
+        <NavLink to="/admin/orders">Orders</NavLink>
+
+        <NavLink to="/admin/reviews">Reviews</NavLink>
+        
+        <NavLink to="/admin/coupons">Coupons</NavLink>
         </aside>
         <div className="admin-content"><Outlet/></div>
         </div>
