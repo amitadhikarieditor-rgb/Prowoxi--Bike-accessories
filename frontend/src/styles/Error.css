@@ -25,11 +25,6 @@
     color: #ffffff;
 }
 
-
-/* =========================
-   NOISE
-========================= */
-
 .error-noise {
     position: absolute;
     inset: 0;
@@ -39,11 +34,6 @@
     background-image:
         url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
 }
-
-
-/* =========================
-   GRID
-========================= */
 
 .error-grid {
     position: absolute;
@@ -72,10 +62,6 @@
         );
 }
 
-
-/* =========================
-   GLOW ORBS
-========================= */
 
 .error-orb {
     position: absolute;
@@ -116,11 +102,6 @@
 
     background: rgba(255,255,255,.025);
 }
-
-
-/* =========================
-   FLOATING EMOJIS
-========================= */
 
 .error-floating {
     position: absolute;
@@ -190,10 +171,6 @@
     }
 }
 
-
-/* =========================
-   SPEED LINES
-========================= */
 
 .speed-lines {
     position: absolute;
@@ -268,10 +245,6 @@
 }
 
 
-/* =========================
-   CONTENT
-========================= */
-
 .error-content {
     position: relative;
 
@@ -283,9 +256,6 @@
 }
 
 
-/* =========================
-   BADGE
-========================= */
 
 .error-badge {
     width: fit-content;
@@ -314,10 +284,6 @@
         0 0 30px rgba(239,68,68,.05);
 }
 
-
-/* =========================
-   BIKE
-========================= */
 
 .error-bike-wrapper {
     position: relative;
@@ -403,10 +369,6 @@
 }
 
 
-/* =========================
-   404 NUMBER
-========================= */
-
 .error-number {
     margin-top: 20px;
 
@@ -485,10 +447,6 @@
 }
 
 
-/* =========================
-   HEADING
-========================= */
-
 .error-content h1 {
     margin: 38px 0 15px;
 
@@ -509,10 +467,6 @@
 }
 
 
-/* =========================
-   DESCRIPTION
-========================= */
-
 .error-description {
     max-width: 590px;
 
@@ -528,11 +482,6 @@
 .error-description strong {
     color: #d1d5db;
 }
-
-
-/* =========================
-   ROUTE
-========================= */
 
 .error-route {
     width: min(470px, 100%);
@@ -612,10 +561,6 @@
 }
 
 
-/* =========================
-   BUTTONS
-========================= */
-
 .error-actions {
     display: flex;
 
@@ -693,10 +638,6 @@
 }
 
 
-/* =========================
-   QUICK LINKS
-========================= */
-
 .error-links {
     margin-top: 25px;
 
@@ -725,10 +666,6 @@
     color: #ffffff;
 }
 
-
-/* =========================
-   TIP CARD
-========================= */
 
 .error-card {
     width: min(570px, 100%);
@@ -818,10 +755,6 @@
 }
 
 
-/* =========================
-   ROAD
-========================= */
-
 .error-road {
     position: absolute;
 
@@ -874,11 +807,6 @@
     width: 80px;
 }
 
-
-/* =========================
-   FOOTER
-========================= */
-
 .error-footer {
     position: absolute;
 
@@ -927,11 +855,6 @@
 .error-footer-dot {
     color: #ef4444 !important;
 }
-
-
-/* =========================
-   MOBILE
-========================= */
 
 @media (max-width: 700px) {
 

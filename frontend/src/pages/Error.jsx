@@ -19,7 +19,7 @@ export default function Error() {
     return (
         <main className="error-page">
 
-            {/* Background */}
+    
             <div className="error-noise"></div>
             <div className="error-grid"></div>
 
@@ -27,14 +27,12 @@ export default function Error() {
             <div className="error-orb error-orb-two"></div>
             <div className="error-orb error-orb-three"></div>
 
-            {/* Floating decorative elements */}
             <div className="error-floating error-floating-one">⚙️</div>
             <div className="error-floating error-floating-two">🏍️</div>
             <div className="error-floating error-floating-three">🔧</div>
             <div className="error-floating error-floating-four">⚡</div>
             <div className="error-floating error-floating-five">🛞</div>
 
-            {/* Background speed lines */}
             <div className="speed-lines">
                 <span></span>
                 <span></span>
@@ -43,16 +41,15 @@ export default function Error() {
                 <span></span>
             </div>
 
-            {/* Main content */}
+
             <section className="error-content">
 
-                {/* Top badge */}
+
                 <div className="error-badge">
                     <MapPin size={14} />
                     <span>YOU HAVE LEFT THE ROAD</span>
                 </div>
 
-                {/* Motorcycle visual */}
                 <div className="error-bike-wrapper">
 
                     <div className="error-bike-circle">
@@ -70,7 +67,7 @@ export default function Error() {
 
                 </div>
 
-                {/* 404 */}
+      
                 <div className="error-number">
                     <span>4</span>
                     <div className="error-zero">
