@@ -33,7 +33,7 @@
 
 [data-theme="dark"] body {
    background: linear-gradient(90deg, #636365 0%, #192f3b 50%, #060606 100%);
-    color: #c99595;
+    color: #f95757;
 }
 
 [data-theme="dark"] .theme-btn {
