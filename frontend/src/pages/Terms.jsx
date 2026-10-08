@@ -16,7 +16,6 @@ export default function Terms() {
                     <span className="privacy-eyebrow">
                         PROVOXI
                     </span>
-
                     <h1>Terms & Conditions</h1>
 
                     <p>

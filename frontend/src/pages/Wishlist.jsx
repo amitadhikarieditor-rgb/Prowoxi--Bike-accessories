@@ -1,37 +1,50 @@
-import {useEffect,useState} from 'react';
-import {wishlist} from '../api/resources';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { wishlist } from '../api/resources';
 import ProductCard from '../components/ProductCard';
-export default function Wishlist(){
-  
-  const [data,Setdata]=useState([]);
 
-    const load=()=>wishlist.get().then(r=>Setdata(r.data.data.products||[]));
+export default function Wishlist() {
+
+    const nav = useNavigate();
+
+    const [data, setData] = useState([]);
+
+    const load = () =>
+        wishlist
+            .get()
+            .then(r => setData(r.data.data.products || []));
 
     useEffect(() => {
-      document.title = 'PROWOXI - Wishlist';
-    load();
-}, []);
+        document.title = 'PROWOXI - Wishlist';
+        load();
+    }, []);
 
-      return (
-    <section>
-      <h1>Wishlist</h1>
+    return (
+        <section>
 
-      <div className="grid">{
-            data.map((Prod) => (
-            <ProductCard
-            key={Prod._id}
+            <button
+                className="back-btn"
+                onClick={() => nav(-1)}
+            >
+                ← Back
+            </button>
 
-            product={Prod}
-            onWishlist={async (id) => {
+            <h1>Wishlist</h1>
 
-              await wishlist.toggle(id);
-              load();
-            }}
-          />
-           ))
-        }
-      </div>
-    </section>
-  )}
+            <div className="grid">
+                {data.map((prod) => (
+                    <ProductCard
+                        key={prod._id}
+                        product={prod}
+                        isWishlisted={true}
+                        onWishlist={async (id) => {
+                            await wishlist.toggle(id);
+                            load();
+                        }}
+                    />
+                ))}
+            </div>
 
-import React from "react";
+        </section>
+    );
+}

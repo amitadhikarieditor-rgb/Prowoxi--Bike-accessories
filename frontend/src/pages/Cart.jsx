@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import '../styles/backBtn.css';
 
 export default function Cart() {
 
@@ -14,6 +15,13 @@ export default function Cart() {
     if (!cart) {
         return (
             <section>
+                <button
+                    className="back-btn"
+                    onClick={() => nav(-1)}
+                >
+                    ← Back
+                </button>
+
                 <h1>Your cart</h1>
                 <p>Log in to see your cart.</p>
             </section>
@@ -28,6 +36,14 @@ export default function Cart() {
 
     return (
         <section>
+
+            <button
+                className="back-btn"
+                onClick={() => nav(-1)}
+            >
+                ← Back
+            </button>
+
             <div className="section-head">
                 <h1>Your cart</h1>
                 <strong>₹{total.toLocaleString('en-IN')}</strong>
@@ -78,6 +94,7 @@ export default function Cart() {
                     </button>
                 </>
             )}
+
         </section>
     );
 }

@@ -3,6 +3,7 @@ import React from 'react';
 import { products, wishlist } from '../api/resources';
 import ProductCard from '../components/ProductCard';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import royalEnfieldVideo from '../styles/13760090_1080_1920_30fps.mp4';
 import ktmVideo from '../styles/hondaVideo.mp4';
@@ -65,6 +66,8 @@ const bikes = [
 
 export default function Products() {
 
+    const nav = useNavigate();
+
     const [data, setData] = useState({
         data: [],
         pagination: {}
@@ -116,6 +119,7 @@ export default function Products() {
 
 
     return (
+        
         <section className="products-page">
 
             {/* <div className="products-bg-video">
@@ -139,6 +143,13 @@ export default function Products() {
                     <span className="eyebrow choose-text">
                         CHOOSE YOUR RIDE
                     </span>
+
+                                <button
+                    className="back-btn"
+                    onClick={() => nav(-1)}
+                >
+                    ← Back
+                </button>
 
                     <div className="bike-scroll">
 

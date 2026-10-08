@@ -81,14 +81,14 @@ export default function Error() {
                     <span>4</span>
                 </div>
 
-                {/* Heading */}
+  
                 <h1>
                     Looks like you took
                     <br />
                     <span>the wrong turn.</span>
                 </h1>
 
-                {/* Description */}
+   
                 <p className="error-description">
                     This page seems to have disappeared somewhere
                     between <strong>first gear</strong> and <strong>full throttle</strong>.
@@ -96,7 +96,7 @@ export default function Error() {
                     Don't worry — no bikes were harmed. 😎
                 </p>
 
-                {/* Current route */}
+
                 <div className="error-route">
 
                     <div className="route-icon">
@@ -110,7 +110,7 @@ export default function Error() {
 
                 </div>
 
-                {/* Buttons */}
+
                 <div className="error-actions">
 
                     <Link
@@ -131,8 +131,6 @@ export default function Error() {
                     </button>
 
                 </div>
-
-                {/* Quick links */}
                 <div className="error-links">
 
                     <span>Maybe you're looking for:</span>
@@ -150,8 +148,6 @@ export default function Error() {
                     </Link>
 
                 </div>
-
-                {/* Funny card */}
                 <div className="error-card">
 
                     <div className="error-card-icon">
@@ -180,16 +176,12 @@ export default function Error() {
                 </div>
 
             </section>
-
-            {/* Decorative road */}
             <div className="error-road">
 
                 <div className="road-line road-line-one"></div>
                 <div className="road-line road-line-two"></div>
 
             </div>
-
-            {/* Bottom brand */}
             <footer className="error-footer">
 
                 <div className="error-footer-brand">
