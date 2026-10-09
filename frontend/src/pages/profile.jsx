@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import bikeVideo from '../styles/mixkit-man-traveling-by-motorcycle-on-an-empty-road-39912-full-hd.mp4';
 import { LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { ShoppingBag } from "lucide-react";
 
 export default function Profile() {
     const nav = useNavigate();
@@ -14,9 +15,10 @@ export default function Profile() {
 
                  <button
     className="back-btn"
-    onClick={() => nav('/products')}
+    onClick={() => nav("/products")}
 >
-    ← Back
+    <ShoppingBag size={18} strokeWidth={2} />
+    Shop
 </button>
 
             <div className="profile-video-bg">

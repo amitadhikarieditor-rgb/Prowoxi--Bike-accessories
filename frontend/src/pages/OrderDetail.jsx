@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { orders } from "../api/resources";
+import { useNavigate } from 'react-router-dom';
 
 export default function OrderDetail() {
     const { id } = useParams();
     const [Order, SetOrder] = useState(null);
+    const nav = useNavigate();
 
      useEffect(() => {
         document.title = 'OdersDetail- PROWOXI';
@@ -26,6 +28,11 @@ export default function OrderDetail() {
 
     return (
         <section>
+            <button className="back-btn" onClick={() => nav(-1)}>
+                ← orders
+            </button>
+
+            <br/>
             <span className="eyebrow">
                 ORDER {Order.orderNumber}
             </span>

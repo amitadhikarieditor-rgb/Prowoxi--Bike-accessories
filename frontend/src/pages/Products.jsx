@@ -4,6 +4,7 @@ import { products, wishlist } from '../api/resources';
 import ProductCard from '../components/ProductCard';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { House } from "lucide-react";
 
 import royalEnfieldVideo from '../styles/13760090_1080_1920_30fps.mp4';
 import ktmVideo from '../styles/hondaVideo.mp4';
@@ -144,12 +145,13 @@ export default function Products() {
                         CHOOSE YOUR RIDE
                     </span>
 
-                                <button
-                    className="back-btn"
-                    onClick={() => nav(-1)}
-                >
-                    ← Back
-                </button>
+                               <button
+    className="back-btn"
+    onClick={() => nav("/")}
+>
+    <House size={18} strokeWidth={2} />
+    Home
+</button>
 
                     <div className="bike-scroll">
 

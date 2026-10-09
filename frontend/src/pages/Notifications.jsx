@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { notifications } from '../api/resources';
+import { useNavigate } from 'react-router-dom';
 
 export default function Notifications() {
     const [Data, setData] = useState([]);
+    const nav = useNavigate();
 
     const load = () =>
         notifications.list().then(res => setData(res.data.data));
@@ -18,6 +20,11 @@ export default function Notifications() {
 
     return (
         <section style={{ marginTop: '200px' }}>
+
+            <button className="back-btn" onClick={() => nav(-1)}>
+                ← Back
+            </button>
+            
             <h1>Notifications</h1>
 
             <div className="list">

@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { orders } from "../api/resources";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Orders() {
     const [data, setData] = useState([]);
+    const nav = useNavigate();
 
     useEffect(() => {
         orders
@@ -20,7 +24,15 @@ export default function Orders() {
 
     return (
         <section>
+
+           <button className="back-btn" onClick={() => nav(-1)}>
+    <ArrowLeft size={18} strokeWidth={2} />
+    Back
+</button>
+
             <h1>Orders</h1>
+
+            {!data.length && <p>You have no orders yet.</p>}
 
             <div className="list">
                 {data.map((Order) => (
