@@ -91,7 +91,16 @@ section {
 .header nav {
     display: flex;
     align-items: center;
-    gap: 22px;
+    gap: 32px;
+
+}
+
+.header nav a:hover{
+    text-decoration: underline;
+}
+
+.header nav a:focus {
+    text-decoration: underline;
 }
 
 .icon-btn,
