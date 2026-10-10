@@ -11,7 +11,7 @@ import {
     CircleAlert
 } from 'lucide-react';
 
-import '../styles/error.css';
+import "../styles/Error.css";
 
 export default function Error() {
     const location = useLocation();
