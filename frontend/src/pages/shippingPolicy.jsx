@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "../styles/shippingPolicy.css";
+import "../styles/ShippingPolicy.css";
 
 export default function ShippingPolicy() {
 
