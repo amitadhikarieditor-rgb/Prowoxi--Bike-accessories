@@ -440,37 +440,19 @@ export default function Products() {
 
                             </div>
 
-                            <div className="form-group">
+                           
+<div className="form-group">
+    <label>Category</label>
 
-                                <label>
-                                    Category
-                                </label>
-
-                                <select
-                                    name="category"
-                                    value={form.category}
-                                    onChange={handleChange}
-                                    required
-                                >
-
-                                    <option value="">
-                                        Select Category
-                                    </option>
-
-                                    {categories.map(
-                                        (category) => (
-                                            <option
-                                                key={category._id}
-                                                value={category._id}
-                                            >
-                                                {category.name}
-                                            </option>
-                                        )
-                                    )}
-
-                                </select>
-
-                            </div>
+    <input
+        type="text"
+        name="category"
+        value={form.category}
+        onChange={handleChange}
+        placeholder="e.g. Crash Guard"
+        required
+    />
+</div>
 
                             <div className="form-group">
 

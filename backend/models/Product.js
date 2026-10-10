@@ -55,7 +55,6 @@ const schema = new mongoose.Schema(
             trim: true,
             index: true
         },
-
         category: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Category',
