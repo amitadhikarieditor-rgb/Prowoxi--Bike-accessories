@@ -60,7 +60,7 @@ section {
     margin-top: 10px;
     margin-left: 5%;
     width: 90%;
-    height: 74px;
+    height: 60px;
     z-index: 20;
     display: flex;
     align-items: center;
@@ -92,6 +92,7 @@ section {
     display: flex;
     align-items: center;
     gap: 32px;
+
 
 }
 
