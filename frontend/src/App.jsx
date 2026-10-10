@@ -27,7 +27,7 @@ import Terms from './pages/Terms.jsx';
 import Error from "./pages/Error.jsx";
 
 import Bikes from "./pages/bikes.jsx";
-import BikeProducts from "./pages/BikeProducts";
+import BikeProducts from "./pages/bikeProducts";
 
 import AdminLayout from "./admin/AdminLayout";
 import Dashboard from "./admin/Dashboard";
