@@ -21,7 +21,7 @@ import Profile from "./pages/profile.jsx";
 
 import ReturnRefundPolicy from "./pages/ReturnRefundPolicy";
 import About from "./pages/About";
-import ShippingPolicy from "./pages/ShippingPolicy.jsx";
+import ShippingPolicy from "./pages/shippingPolicy.jsx";
 import Privacy from './pages/Privacy.jsx';
 import Terms from './pages/Terms.jsx';
 import Error from "./pages/Error.jsx";
