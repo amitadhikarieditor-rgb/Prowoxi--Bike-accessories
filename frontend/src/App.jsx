@@ -16,7 +16,7 @@ import OrderDetail from "./pages/OrderDetail";
 import Wishlist from "./pages/Wishlist";
 import Addresses from "./pages/Addresses";
 import Notifications from "./pages/Notifications";
-import Profile from "./pages/Profile.jsx";
+import Profile from "./pages/profile.jsx";
 
 
 import ReturnRefundPolicy from "./pages/ReturnRefundPolicy";
