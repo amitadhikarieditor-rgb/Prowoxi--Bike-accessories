@@ -1,3 +1,4 @@
+
 import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 
@@ -27,25 +28,28 @@ export async function issueAuth(user) {
     };
 }
 
+const cookieOptions = {
+    httpOnly: true,
+    secure: env.nodeEnv === 'production',
+    sameSite: env.nodeEnv === 'production' ? 'none' : 'lax',
+    path: '/'
+};
+
 export function setAuthCookies(res, { access, refresh }) {
     res.cookie('accessToken', access, {
-        httpOnly: true,
-        sameSite: 'lax',
-        secure: env.nodeEnv === 'production',
+        ...cookieOptions,
         maxAge: env.accessMinutes * 60 * 1000
     });
 
     res.cookie('refreshToken', refresh, {
-        httpOnly: true,
-        sameSite: 'lax',
-        secure: env.nodeEnv === 'production',
+        ...cookieOptions,
         maxAge: env.refreshDays * 86400000
     });
 }
 
 export function clearAuthCookies(res) {
-    res.clearCookie('accessToken');
-    res.clearCookie('refreshToken');
+    res.clearCookie('accessToken', cookieOptions);
+    res.clearCookie('refreshToken', cookieOptions);
 }
 
 export const compareHash = (plain, hash) =>
