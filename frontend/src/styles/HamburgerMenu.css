@@ -161,7 +161,7 @@
         gap: 5px;
         padding: 16px;
 
-        background: rgba(0, 40, 88, 0.399);
+        background: rgba(244, 245, 246, 0.77);
 
         backdrop-filter: blur(10px) saturate(180%);
         -webkit-backdrop-filter: blur(24px) saturate(180%);
