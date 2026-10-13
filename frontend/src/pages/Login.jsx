@@ -21,8 +21,8 @@ export default function Login() {
 
     const [error, setError] = useState('');
 
-    const submit = async err => {
-        err.preventDefault();
+    const submit = async (event) => {
+        event.preventDefault();
 
         try {
             await login(form);
@@ -57,8 +57,8 @@ export default function Login() {
                     required
                     placeholder="Email"
                     value={form.email}
-                    onChange={err =>
-                        setForm({ ...form, email: err.target.value })
+                    onChange={(event) =>
+                        setForm({ ...form, email: event.target.value })
                     }
                 />
 
@@ -67,8 +67,8 @@ export default function Login() {
                     required
                     placeholder="Password"
                     value={form.password}
-                    onChange={err =>
-                        setForm({ ...form, password: err.target.value })
+                    onChange={(event) =>
+                        setForm({ ...form, password: event.target.value })
                     }
                 />
 

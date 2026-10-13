@@ -1,15 +1,12 @@
 import api from './client';
 
-
-
-
 export const auth = {
-    register: d => api.post('/auth/register', d),
-    login: d => api.post('/auth/login', d),
+    register: data => api.post('/auth/register', data),
+    login: data => api.post('/auth/login', data),
     logout: () => api.post('/auth/logout'),
     me: () => api.get('/auth/me'),
-    forgot: d => api.post('/auth/forgot-password', d),
-    reset: d => api.post('/auth/reset-password', d)
+    forgot: data => api.post('/auth/forgot-password', data),
+    reset: data => api.post('/auth/reset-password', data)
 };
 
 

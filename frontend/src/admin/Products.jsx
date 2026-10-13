@@ -15,6 +15,7 @@ const emptyForm = {
     featured: false
 };
 
+
 const bikes = [
     { name: 'Royal Enfield', value: 'royal-enfield' },
     { name: 'KTM', value: 'ktm' },

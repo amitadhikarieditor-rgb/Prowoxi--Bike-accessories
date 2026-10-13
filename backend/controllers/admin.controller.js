@@ -5,11 +5,39 @@ import Product from '../models/Product.js';
  import Coupon from '../models/Coupon.js'; 
  import { AppError } from '../utils/appError.js';
  export async function dashboard(req,res){
+
     const [users,products,orders,revenue]=await Promise.all([User.countDocuments(),
         Product.countDocuments({isActive:true}),
-        Order.countDocuments(),Order.aggregate([{$match:{paymentStatus:'PAID'}},
-            {$group:{_id:null,total:{$sum:'$total'}}}])]);
-            res.json({success:true,data:{users,products,orders,revenue:revenue[0]?.total||0}});}
+        Order.countDocuments(),
+        Order.aggregate([
+            {
+            $match:
+            {
+                paymentStatus:'PAID'
+            }
+        },
+            {
+                $group:{
+                    _id:null,
+                    total:{
+                        $sum:'$total'
+                    }
+                }
+            }
+        ]
+        )]
+    );
+            res.json({
+                success:true,
+                data:
+                {
+                    users,
+                    products,
+                    orders,
+                    revenue:revenue[0]?.total||0
+                }
+            });
+        }
              export async function users(req,res){res.json({success:true,data:await User.find().select('-passwordHash -refreshTokenHash -resetTokenHash -emailVerifyTokenHash').sort('-createdAt').limit(200)});} 
              
              export async function setUserStatus(req,res){const u=await User.findByIdAndUpdate(req.params.id,{isActive:req.body.isActive},{new:true}).select('name email role isActive');
