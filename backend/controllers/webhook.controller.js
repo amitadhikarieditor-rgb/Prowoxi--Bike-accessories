@@ -7,18 +7,18 @@ export async function razorpayWebhook(req, res) {
     return res.status(400).send("invalid signature");
   const e = req.body?.event;
   if (e === "payment.captured") {
-    const p = req.body.payload.payment.entity;
-    const o = await Order.findOne({ "payment.providerOrderId": p.order_id });
+    const payment = req.body.payload.payment.entity;
+    const order = await Order.findOne({ "payment.providerOrderId": payment.order_id });
 
-    if (o && o.paymentStatus !== "PAID") {
-      o.paymentStatus = "PAID";
-      o.orderStatus = "PAID";
-      o.payment.providerPaymentId = p.id;
+    if (order && order.paymentStatus !== "PAID") {
+      order.paymentStatus = "PAID";
+      order.orderStatus = "PAID";
+      order.payment.providerPaymentId = payment.id;
 
-      o.history.push({ status: "PAID", note: "Razorpay webhook" });
+      order.history.push({ status: "PAID", note: "Razorpay webhook" });
 
-      await o.save();
-      await orderPaid(o);
+      await order.save();
+      await orderPaid(order);
     }
   }
   res.json({ received: true });
