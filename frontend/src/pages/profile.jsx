@@ -10,6 +10,10 @@ export default function Profile() {
     const nav = useNavigate();
     const { user, logout } = useAuth();
 
+        useEffect(() => {
+            document.title = 'Profile-PROWOXI';
+        }, []);
+
     return (
         <section className="profile-page">
 
