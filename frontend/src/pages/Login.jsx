@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {useEffect} from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import video from '../styles/285224_medium.mp4';
@@ -10,7 +10,6 @@ export default function Login() {
         document.title = 'LOGIN- PROWOXI';
     }, []);
 
-
     const { login } = useAuth();
     const nav = useNavigate();
 
@@ -20,6 +19,7 @@ export default function Login() {
     });
 
     const [error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const submit = async (event) => {
         event.preventDefault();
@@ -62,15 +62,25 @@ export default function Login() {
                     }
                 />
 
-                <input
-                    type="password"
-                    required
-                    placeholder="Password"
-                    value={form.password}
-                    onChange={(event) =>
-                        setForm({ ...form, password: event.target.value })
-                    }
-                />
+                <div className="password-wrapper">
+                    <input
+                        type={showPassword ? 'text' : 'password'}
+                        required
+                        placeholder="Password"
+                        value={form.password}
+                        onChange={(event) =>
+                            setForm({ ...form, password: event.target.value })
+                        }
+                    />
+
+                    <button
+                        type="button"
+                        className="password-toggle"
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? 'Hide' : 'Show'}
+                    </button>
+                </div>
 
                 <button className="btn">Log in</button>
 
