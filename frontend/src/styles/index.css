@@ -2464,6 +2464,7 @@ td {
 };
 
 
+
 .password-wrapper {
     position: relative;
     width: 100%;
@@ -2471,17 +2472,35 @@ td {
 
 .password-wrapper input {
     width: 100%;
-    padding-right: 65px;
+    padding-right: 75px;
+    box-sizing: border-box;
 }
 
 .password-toggle {
     position: absolute;
-    right: 142px;
-    top: 59%;
+    top: 50%;
+    right: 16px;
     transform: translateY(-50%);
+
+    height: auto;
+    padding: 4px 0;
+    margin: 0;
+
     background: transparent;
     border: none;
-    cursor: pointer;
+    box-shadow: none;
+    border-radius: 0;
+
     color: #19383d;
+    font-size: 15px;
     font-weight: 600;
+    line-height: 1;
+
+    cursor: pointer;
+    z-index: 2;
+}
+
+.password-toggle:hover {
+    background: transparent;
+    color: #0b2428;
 }
