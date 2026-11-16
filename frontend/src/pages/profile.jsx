@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import bikeVideo from '../styles/mixkit-man-traveling-by-motorcycle-on-an-empty-road-39912-full-hd.mp4';
